@@ -1,0 +1,125 @@
+SHOW DATABASES;
+
+'Pick the existing MySQL database' by executing the following command:
+USE mysql;
+
+We can examine 'how the database was created' using the following query:
+SHOW CREATE DATABASE mysql;
+
+To know 'what tables the MySQL database holds'. We can do this by using the SHOW statement as follows:<
+ SHOW TABLES;
+
+ We can also explore the 'structure of a table' using the DESCRIBE command
+ DESCRIBE user; // USER always returns the name of the current context.( DESCRIBE or DESC both are same)
+
+ We can also use the 'SHOW statement to display how the table was created'.
+ SHOW CREATE TABLE servers;
+
+ We can 'display the column information' for a table using the SHOW statement
+ SHOW COLUMNS FROM servers;
+
+ To 'create a DATABASE'.
+ CREATE DATABASE MovieIndustry;
+
+ If we attempt to re-create an existing database, MySQL will report an error. We can circumvent this error by using the 'IF NOT EXISTS' command as shown below:
+CREATE DATABASE IF NOT EXISTS
+MovieIndustry;
+
+We can delete/drop a database using the 'DROP statement'. All the tables, indexes, and other structures created within the database are also deleted.
+DROP DATABASE MovieIndustry;
+
+'Data Types'
+This strong typing and sizing make the data in relational databases structured. The major categories of various data-types are as follows:
+* Numeric e.g., INT, BIGINT, TINYINT, DECIMAL, etc.
+* Date and Time e.g., DATE, TIME, TIMESTAMP, YEAR, etc
+* String e.g., VARCHAR, CHAR, ENUM, SET, BLOB, etc. // ENUM and SET columns provide an efficient way to define columns that can contain only a given set of values. 
+* JSON e.g., JSON
+* Spatial Data represents the location, size, and shape of an object on planet Earth such as a building, lake, mountain, or township. 
+   MySQL also supports spatial data types, e.g., GEOMETRY, POINT, etc.
+
+'Difference between CHAR and VARCHAR' 
+is that the former(char) is fixed length whereas the latter(Varchar) is variable length. If we specify CHAR(20), it will imply the name is always stored as
+twenty characters with spaces even if the name consists of only four characters.
+
+'Create table'
+
+CREATE TABLE Actors (
+FirstName VARCHAR(20),
+SecondName VARCHAR(20),
+DoB DATE,
+Gender ENUM('Male','Female','Other'),
+MaritalStatus ENUM('Married','Divorced','Single'),
+NetWorthInMillions DECIMAL);
+
+SHOW TABLES;
+
+We can inspect the Actors table we just created using the following command:
+DESC Actors; // The DESC command displays all the columns of the table and related metadata such as data type and nullability for each column.
+
+'Adding Restrictions to the table'
+1. AUTO_INCREMENT feature:
+*There can be only one column marked as AUTO_INCREMENT in a table.
+*The AUTO_INCREMENT column can’t have a default value.
+*The AUTO_INCREMENT column must be indexed.
+*The AUTO_INCREMENT feature isn’t portable to other databases and the counter is reset when we truncate or drop a table.
+*The auto increment sequence begins at 1 for an empty table.
+
+2. Disallow inserting null as a column value. We can mark a column as 'NOT NULL' to achieve this purpose.
+3. You want to add a record to the table but aren’t aware of the marital status of the Actor. In such a scenario, we can set a 'default' value for 
+a particular column using the DEFAULT keyword.
+4. We can also use 'NOT NULL' and 'DEFAULT' together.
+
+CREATE TABLE Actors (
+Id Int AUTO_INCREMENT,
+FirstName VARCHAR(20) NOT NULL,
+SecondName VARCHAR(20) NOT NULL,
+DoB DATE NOT NULL,
+Gender ENUM('Male','Female','Other') NOT NULL,
+MaritalStatus ENUM('Married','Divorced','Single','Unknown') DEFAULT "Unknown",
+NetWorthInMillions DECIMAL NOT NULL,
+PRIMARY KEY (Id));
+
+We can also use the IF EXISTS clause when creating a table, similar to the way we did when creating a database. We can execute the following query without any side-effects as the Actors table already exists.
+
+CREATE TABLE IF NOT EXISTS Actors (
+Id INT AUTO_INCREMENT,
+FirstName VARCHAR(20) NOT NULL,
+SecondName VARCHAR(20) NOT NULL,
+DoB DATE NOT NULL,
+Gender ENUM('Male','Female','Other') NOT NULL,
+MaritalStatus ENUM('Married', 'Divorced', 'Single', 'Unknown') DEFAULT "Unknown",
+NetWorthInMillions DECIMAL NOT NULL,
+PRIMARY KEY (Id));
+
+'TEMPORARY Table': Temporary tables can be used to work with intermediate data or results. Also, complex queries with joins or nested queries can 
+be broken up and worked on step-by-step by storing intermediate results in temporary tables.
+Say we want to capture only the first names of actors in a table. We can create a temporary table and populate it with only the first name as follows:
+
+CREATE TEMPORARY TABLE ActorNames (FirstName CHAR(20));
+
+'Collations & Character Sets'
+Collation means assigning some order to the characters in an Alphabet, say, ASCII or Unicode etc.
+Suppose you have 3 characters in your alphabet - {A,B,C}. You can define some example collations for it by assigning integral values to the characters
+
+Example 1 = {A=1,B=2,C=3}
+Example 2 = {C=1,B=2,A=3}
+Example 3 = {B=1,C=2,A=3}
+
+SHOW COLLATION;
+
+CHARACTER SET:
+A character encoding is a way to encode characters so that they fit in memory. it will be 0xe282ac.
+SHOW CHARACTER SET;
+
+'Difference between charcter set and collation'
+A character set is a set of characters while a collation is the rules for comparing and sorting a particular character set.
+ For example, a subset of a character set could consist of the letters A , B and C . A default collation could define these as appearing in 
+ an ascending order of A, B, C.
+
+You can inspect the defaults for your server using the following query:
+SHOW VARIABLES LIKE "c%";
+
+
+
+
+

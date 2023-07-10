@@ -1,0 +1,12 @@
+We stored the data in two ways:
+1. Using two separate lists
+content_ratings = ['4+', '9+', '12+', '17+']
+numbers = [4433, 987, 1155, 622]
+
+2. Using a single list of lists
+content_rating_numbers = [['4+', '9+', '12+', '17+'], [4433, 987, 1155, 622]]
+
+
+Nafees Belal 
+Senior Director of Payment Services
+nafees.belal@discover.com
