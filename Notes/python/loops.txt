@@ -1,4 +1,4 @@
-python loop notes
+python loop notes1
 
 The 'range()' function allows us to create a list with a consecutive list of integers without having to write each one.
 [1,2,3,4,5]:
