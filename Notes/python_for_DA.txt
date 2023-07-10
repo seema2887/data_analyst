@@ -1,0 +1,284 @@
+'To declare a variable' 
+name = seema
+'To execute use print'
+print(name) // output- seema
+
+'1us dollar = 1.34 canadian dollar'
+salary = 124267
+converted_salary = salary * 1.34
+print(converted_salary)
+
+'Instead of converting a currency once, we can create a reusable program.'// The code below convert us dollars to different countries currency
+salary = 124267
+conversion_rate = 1.34
+converted_salary = salary * conversion_rate
+
+'To comment use a pound sign #'
+
+* Fundamental Data Types:
+Creating a List : We create lists using square brackets, starting with an opening bracket [ and ending with a closing bracket ].
+Python uses commas to separate the values in a list.
+lists are commonly much longer. This makes them difficult to read in a code editor. When this happens, we need to start using functions to characterize
+the list.
+For example, rather than counting the items in a list manually, we can use the 'len() function' (short for "length") to count them. len() can take in a
+list and tell you how many items are in it.
+'For example'
+years_experience = [6.1, 12.3, 2.2, 2.7, 1.2]
+num_entries = len(years_experience)
+print(num_entries)
+
+Numerical Data
+Python considers integers and decimals to be two distinct data types. Python refers to decimal numbers as floating-point numbers, or "floats", 
+so we'll also use this terminology.
+Its possible to convert a float to an integer — and vice versa. To convert an integer to a float, we can use the 'float() function':
+
+'To convert integer to float'
+print(float(124267) // 124267.0
+
+'To convert a float to interger we can use int() function:'
+print(int(2.7) // 2 int() will always round a float down, even if the number after the decimal point is greater than five
+
+'If we want to round off a number, we can instead use the round() function, which has more flexibility and can also round up:'
+print(round(2.7)) //3  round the number directly not the variable
+print(round(1.2)) //1
+
+Python provides a useful function for checking the data types of our variables. Its called the 'type() function'.
+salary = 75000
+type_salary = type(salary)
+print(type_salary)
+
+output - class 'int'
+
+' Text to Numerical Casting'
+Instructions
+Lets say that the first person started with a yearly salary of 75000, has a current yearly salary of "124627" and "6.1" years of experience. 
+Weve loaded this information into the code editor. Based on this information, how much did their salary increase on average each year? Let's figure this 
+out through the following steps:
+
+Calculate this person's change in salary from the start of their career to now, using current_salary in the calculation. Assign the result to the 
+variable salary_change.
+Convert the current_salary variable to an appropriate data type.
+Then, divide salary_change by years_experience and assign the result to the variable average_annual_increase.
+Convert years_experience to the appropriate data type.
+
+Answer
+starting_salary = 75000
+current_salary = "124627"
+years_experience = "6.1"
+
+salary_change = int(current_salary) - starting_salary
+average_annual_increase = salary_change / float(years_experience)
+
+'Numerical to Text Casting and String Concatenation'
+One issue with string concatenation is that we can't combine strings with numerical data. We need to changed numbers into strings before we can combine
+them with another string. Python provides the str() function for this purpose.
+eg:
+salary = 74321
+print("salary:" + str(salary))
+
+output
+salary: 74321
+
+
+' Numerical to Text Casting and String Concatenation'
+Instruction:
+Assign the fifth salary of the compensation column to the variable salary.
+Assign the fifth number of the experience_coding column to the variable years.
+Create a variable called salary_message that includes the message below. Use the years and salary variables in your code. Remember to change these
+ variables to strings. Here's the message:
+
+"After 1.2 years, one data professional earns $36288."
+
+Print out your salary_message variable to confirm that it matches the message above.
+
+'Answer'
+salary = 36288
+years = 1.2
+salary_message = "After " + str(years) + " years, one data professional earns $" + str(salary) + "."
+print(salary_message)
+
+'# Escaping Special Characters'
+ Notice the backslash character in 'professional\'s'
+advice = 'One data professional\'s advice is: "always comment your code."'
+print(advice)
+
+' Multi-line Strings'
+. We can also write strings over many lines using the triple quotation mark symbol (''' or """). See the example below.
+text = '''This is a sentence.
+This is another sentence, on a different line.
+This is a third sentence.'''
+print(text)
+
+output
+This is a sentence.
+This is another sentence, on a different line.
+This is a third sentence.
+
+' Missing Data  or data that doesnt exist.'
+Python has a special keyword to represent this: the None keyword. 
+ If we indicate that a variable has missing data, we can actually assign None to it, as shown below, and see that its class is 'NoneType':
+ question_answered = None
+print(type(question_answered))
+
+output - <class 'NoneType'>
+
+'Keywords' in Python are special words that cannot be used as variable names. True, False and None are examples of keywords'
+'There are four primitive types in Python: integers, decimals, strings, and Booleans'
+
+'List'
+Construct a new list that represents the third row (third survey response - don't count the header row) of the snippet. Assign the result to the variable third_row.
+Make sure to specify the appropriate data type for each list item.
+Use the None keyword if the row contains a "None" value.
+Use the len() function to count the number of columns in the dataset and assign the result to the variable num_cols.
+
+Answer:
+third_row = [2.2, True, False, False, None, 74321]
+num_cols = len(third_row)
+
+'Accessing List Data'
+
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+ml_library = first_row[4]
+knows_sql =first_row[3]
+
+'Slicing a List'
+To create skills,we slice the first_row list by passing all of the indices between 1 and 4 into the square brackets. 1 is the start index, and 4 is the stop index. 
+The colon : indicates that we want to start at 1 and end at 4.
+skills = first_row[1:4] 
+print(skills)
+
+'We can also create a slice by only omitting the start index. Python interprets this as starting from the beginning of a list:'
+
+# Print the first 4 items in first_row
+print(first_row[:4])
+
+Question:
+Trim down first_row to only contain the most_used and compensation columns. Index the relevant information and assign it to the variable 
+filtered_first_row.
+Answer:
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+filtered_first_row = first_row[4:6]
+
+'Negative Indices'
+# This line excludes the last item
+print(first_row[-5:-1])
+
+[True, False, True, "Scikit-learn"]
+
+'To correctly include the last element of a list in a slice with negative indices, we need to omit the stop index.'
+print(first_row[-5:])
+
+[True, False, True, 'Scikit-learn', 124267]
+
+'Adding Data to Lists'(to add data at the end of the list we use 'append()' method)
+Lets say that we'd like to add a column for monthly salary.
+
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+monthly_salary = first_row[-1] / 12    // 124267 (salary) divide by 12
+
+first_row.append(monthly_salary)
+print(first_row)
+
+output
+[6.1, True, False, True, 'Scikit-learn', 124267, 10355.583333333334]
+
+'Updating Lists'
+1. Index the data that you'd like to change
+2. Reassign the value of this index using the equals sign (=)
+Lets say we learned that the salary column of first_row was incorrectly entered. To update the data, we'll need to update 124267 to 130000:
+
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+first_row[5] = 130000
+print (first_row)
+
+'Suppose that we needed to update all of the Boolean values in first_row to be False'
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+
+first_row[1:4] = [False, False,False]
+print(first_row)
+
+# This does not work
+first_row[1:4] = False
+
+'Question'
+Update fourth_row to reflect that their most_used skill is actually "PyTorch."
+Use list indexing to reassign the value.
+Update fourth_row to reflect that they know both Python and R (corresponding to python_user and r_user), so both of these values should be updated to True.
+Use a slice to update them at the same time.
+
+'Answer'
+fourth_row = [2.7, False, False, True, None, 62593]
+fourth_row[4] = "PyTorch"
+fourth_row[1:3]=[True,True]
+
+'output'
+[2.7, True, True, True, 'PyTorch', 62593]
+
+'Removing Data'(To delete data from a list, we use the 'del' statement.)
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+
+# Removing the sql_user column
+del first_row[3]
+print(first_row)
+
+output
+[6.1, True, False, "Scikit-learn", 124267]
+
+' Removing Data' 
+To delete data from a list, we use the 'del' statement. 
+
+first_row = [6.1, True, False, True, "Scikit-learn", 124267]
+
+# Removing the sql_user column
+del first_row[3]
+print(first_row)
+
+output
+[6.1, True, False, "Scikit-learn", 124267]
+
+'A List of Lists'
+let's construct a new list named table and use first_row and second_row as its elements.
+
+table = [first_row, second_row]
+print(table[0])
+output
+[6.1, True, False, True, "Scikit-learn", 124267]
+
+We can also access the elements inside the individual rows from table. For example, if we needed to access the salary from the first row in table,
+we could use nested indexing.
+print(table[0][5]) # retrieving salary from the first row
+output
+124267
+1. The first index corresponds to which row we want to index from table. 
+2. The second index is applied to table[0], so it indexes the specific item we want from that row.
+
+'Working With Raw Data'
+Question
+1.Print the kaggle_data dataset using Run Code. This will show you all of the contents of the kaggle_data dataset. There's a lot!
+After you've run the print() statement, feel free to comment it out before doing the exercises.
+2.Extract the first element in kaggle_data and assign it to the variable column_names. Run the code and confirm that the column names you see match 
+the names in the table above.
+3.Extract all of the rows in kaggle_data except for the first row and assign the result to the variable survey_responses.
+4.How many survey responses are in the survey_responses dataset? Assign the result to the variable total_responses.
+5.Create a slice of survey_responses that includes the first five survey responses. Assign the result to the variable survey_responses_head. 
+Examine the result to confirm that the information matches the table above.
+
+Answer:
+1. #print(kaggle_data)
+2. column_names = kaggle_data[0]
+    print(column_names)
+3.survey_responses = kaggle_data[1:]
+4.total_responses = len(survey_responses)
+    print(total_responses)
+5.survey_responses_head = survey_responses[1:6] or 
+survey_responses_head = survey_responses[:5] 
+
+
+
+
+
+
+
+
+
+

@@ -5,3 +5,4 @@ sqli\n
 power-bi\n
 Tableu\n
 python
+cloud
