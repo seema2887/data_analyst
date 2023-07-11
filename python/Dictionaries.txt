@@ -1,0 +1,220 @@
+We stored the data in two ways:
+1. Using two separate lists
+content_ratings = ['4+', '9+', '12+', '17+']
+numbers = [4433, 987, 1155, 622]
+
+2. Using a single list of lists
+content_rating_numbers = [['4+', '9+', '12+', '17+'], [4433, 987, 1155, 622]]
+
+'To create the dictionary':
+Map each content rating to its corresponding number by following an index:value pattern. 
+For instance, to map a rating of '4+' to the number 4,433, we type '4+': 4433 
+(notice the colon between '4+' and 4433). To map '9+' to 987, we type '9+': 987, and so on.
+Type the entire sequence of index:value pairs, and separated each with a comma: '4+': 4433, '9+': 987, '12+': 1155, '17+': 622.
+Surround the sequence with curly braces: {'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+
+To retrieve the 'individual values' of the content_ratings dictionary, we can use the new indices.
+ We retrieve individual dictionary values the same way we retrieve individual list elements 
+ — we follow a variable_name[index] pattern:
+numbers = [4433, 987, 1155, 622]
+print(numbers[0])
+print(numbers[2])
+output:
+4433
+1155
+
+'and if'
+content_ratings = {'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+print(content_ratings['4+'])
+print(content_ratings['12+'])
+output
+4433
+1155
+
+'Alternative Method of Creating a Dictionary'
+we can create a dictionary and populate it with values by following these steps:
+
+Create an empty dictionary.
+Add values one by one to that empty dictionary.
+Adding a value to a dictionary follows the pattern dictionary_name[index] = value. 
+To add a value 4433 with an index '4+' to a dictionary named content_ratings, we need to use 
+the code content_ratings['4+'] = 4433.
+
+content_ratings = {} 
+content_ratings['4+'] = 4433
+
+print(content_ratings)
+output 
+{'4+': 4433}
+We can keep adding values using the same approach:
+content_ratings = {} 
+content_ratings['4+'] = 4433
+content_ratings['9+'] = 987
+content_ratings['12+'] = 1155
+content_ratings['17+'] = 622
+
+print(content_ratings)
+output
+{'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+
+' Key-Value Pairs'
+The index of a dictionary value is called a key. In '4+': 4433, the dictionary key is '4+', 
+and the dictionary value is 4433. As a whole, '4+': 4433 is a key-value pair.
+
+'Dictionary values' can be of any data type: strings, integers, floats, Booleans, lists, and 
+even dictionaries.
+
+d_1 = {'key_1': 'value_1', 
+       'key_2': 1,
+       'key_3': 1.832,
+       'key_4': False,
+       'key_5': [1,2,3],
+       'key_6': {'inner_key' : 10}}
+
+1.print(d_1)
+2.print(d_1['key_1'])
+3.print(d_1['key_6'])
+
+output
+1. {'key_1': 'value_1', 'key_2': 1, 'key_3': 1.832, 
+ 'key_4': False, 'key_5': [1, 2, 3], 
+ 'key_6': {'inner_key': 10}}
+2. value_1
+3. {'inner_key': 10}
+
+'Dictionary keys' can be almost any data type, except lists and dictionaries.
+If we use lists or dictionaries as dictionary keys, we'll get an error :
+
+d_1 = {5: 'int',
+       '5': 'string',
+       3.5: 'float',
+       False: 'Boolean'}
+
+print(d_1)
+output
+{5: 'int', '5': 'string', 3.5: 'float', False: 'Boolean'}
+
+and if list & dictionaries then it will give an error :
+d_2 = {[1,2,3]: 'list'}
+
+print(d_2)
+output
+TypeError: unhashable type: 'list'
+
+d_3 = {{'key': 'value'}: 'dictionary'}
+
+print(d_3)
+output
+TypeError: unhashable type: 'dict'
+
+Python tries to convert each dictionary key to an integer (even if the key is a data type other 
+than an integer). Python does the conversion using the hash() command:
+print(hash(4))
+print(hash('four'))
+print(hash(3.32))
+print(hash(True))
+
+output
+4
+-161051316448665671
+737869762948381699
+1
+
+The hash() command doesn't transform lists and dictionaries to integers. It returns an error 
+instead. 
+print(hash([1,2,3]))
+Output
+TypeError: unhashable type: 'list'
+
+print(hash({'key': 'value'}))
+Output
+TypeError: unhashable type: 'dict'
+
+Each 'key' in dictionary should be unique. If we use an identical key for two or more 
+different values, 'Python keeps only the the first key and the last value and removes the other'.
+
+d_1 = {'a_key': 1,
+       'another_key': 2,
+       'a_key': 3,
+       'yet_another_key': 4,
+       'a_key': 5}
+
+print(d_1)
+
+output
+{'a_key': 5, 'another_key': 2, 'yet_another_key': 4}
+
+The hash() command converts the Boolean True to 1, and the Boolean False to 0. 
+This means the Booleans True and False will conflict with the integers 0 and 1. 
+The dictionary keys won't be unique anymore, and Python will only keep the first key 
+and the last value in cases like that.
+
+d_1 = {1: 'one', True: 'Boolean'}
+d_2 = {False: 'Bool', 0: 'zero'}
+d_3 = {0: 'zero', 1: 'one',  2: 'two', True: 'true',
+       False: 'false'}
+
+print(d_1)
+print(d_2)
+print(d_3)
+
+Output
+{1: 'Boolean'}
+{False: 'zero'}
+{0: 'false', 1: 'true', 2: 'two'
+
+'To learn how to count the number of apps for each unique content rating'
+we can check if a certain value exists in the dictionary as a key.
+eg:if the value '12+' exists as a key in the dictionary 
+{'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}. 
+ we use the 'in' operator.
+
+ content_ratings = {'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+print('12+' in content_ratings)
+output
+True
+The '12+' in content_ratings expression returned the Boolean True. This is because the 
+string '12+' exists in the dictionary content_ratings as a key.
+If we use in with a certain value that doesn't exist among a dictionary's keys, we'll get False.
+Checking if 4433 or 987 exists in content_ratings also returns False because the search is only
+ for the dictionary's keys (4433 and 987 exist as dictionary values in content_ratings).
+
+content_ratings = {'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+
+print(4433 in content_ratings)
+print(987 in content_ratings)
+output
+False
+False
+
+1. Question
+a. Using the in operator, check whether the following values exist as dictionary 'keys' in the content_ratings dictionary:
+The string '9+'. Assign the output of the expression to a variable named is_in_dictionary_1.
+The integer 987. Assign the output of the expression to a variable named is_in_dictionary_2.
+b. Combine the output of an expression containing in with an if statement. 
+If the string '17+' exists as dictionary key in content_ratings, then do the following:
+Assign the string "It exists" to a variable named result.
+Print the result variable.
+
+Answer:
+content_ratings = {'4+': 4433, '9+': 987, '12+': 1155, '17+': 622}
+is_in_dictionary_1 = '9'in content_ratings
+is_in_dictionary_2 = 987 in content_ratings
+
+if '17+' in content_ratings:
+    result ="It exists"
+    
+    print(result)
+
+'Counting with Dictionaries'
+To update a dictionary value, we need to reference it by its corresponding dictionary key 
+and then perform the updating operation we want.
+
+
+
+
+
+
+
+
+

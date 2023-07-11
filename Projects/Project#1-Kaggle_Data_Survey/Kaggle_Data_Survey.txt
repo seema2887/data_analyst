@@ -1,4 +1,3 @@
-
 import csv
 
 with open('kaggle2021-short.csv') as f:
@@ -6,71 +5,104 @@ with open('kaggle2021-short.csv') as f:
     kaggle_data = list(myreader)
 
 #print(kaggle_data)
-
-
 column_names = kaggle_data[0]
 #print(column_names)
 
 survey_responses = kaggle_data[1:]
 #print(survey_responses)
 
-for row in survey_responses:
-    row[0] = float(row[0])
-    row[1] = bool(row[1])
-    row[2] = bool(row[2])
-    row[3] = bool (row[3])
-    row[4] = str(row[4])
-    row[5] = int(row[5])
-#print(survey_response)
-count_R = 0
-count_python = 0
-count_Sql = 0
+# Iterate over the indices so that we can update all of the data
+num_rows = len(survey_responses)
+for i in range(num_rows):
 
-for row in survey_responses:
-    knows_R = row[2]
-    if knows_R:
-        count_R += 1
-        
-for row in survey_responses:
-    knows_python = row[1]
-    if knows_python:
-        count_python +=1
-            
-for row in survey_responses:            
-    knows_Sql = row[3]
-    if knows_Sql:
-        count_Sql +=1
+    # experience_coding
+    survey_responses[i][0] = float(survey_responses[i][0]) 
+    
+    # python_user
+    if survey_responses[i][1] == "TRUE":
+        survey_responses[i][1] = True
+    else:
+        survey_responses[i][1] = False
+    
+    # r_user
+    if survey_responses[i][2] == "TRUE":
+        survey_responses[i][2] = True
+    else:
+        survey_responses[i][2] = False
 
-prop_knows_R = count_R / len(survey_responses)
-prop_knows_python = count_python / len(survey_responses)
-prop_knows_Sql = count_Sql / len(survey_responses)
+    # sql_user
+    if survey_responses[i][3] == "TRUE":
+        survey_responses[i][3] = True
+    else:
+        survey_responses[i][3] = False
 
-experience_coding = []
-compensation = []
-
-for row in survey_responses:
-        experience_coding.append(row[0])
-        compensation.append(row[-1])
-min_exp = min(experience_coding)
-max_exp = max(experience_coding)
-sum_exp = sum(experience_coding)
-avg_exp = sum_exp / len(experience_coding)
-experience_coding_string = str(experience_coding)
-
-min_comp = min(compensation)
-max_comp = max(compensation)
-sum_comp = sum(compensation)
-avg_comp = sum_comp / len(compensation)
-compensation_string = str(compensation)
-
-print(experience_coding_string)
-print(compensation_string) 
+    # most_used
+    if survey_responses[i][4] == "None":
+        survey_responses[i][4] = None
+    else:
+        survey_responses[i][4] = survey_responses[i][4]
 
 
+    # compensation
+    survey_responses[i][5] = int(survey_responses[i][5])
+
+#counting users
+
+python_user_count = 0
+r_user_count = 0
+sql_user_count = 0
+
+for i in range(num_rows):
+
+    # Detect if python_user column is True
+    if survey_responses[i][1]:
+        python_user_count = python_user_count + 1
+    
+    # Detect if r_user column is True
+    if survey_responses[i][2]:
+        r_user_count = r_user_count + 1
+
+    # Detect if sql_user column is True
+    if survey_responses[i][3]:
+        sql_user_count = sql_user_count + 1
+
+print("Number of Python users: " + str(python_user_count))
+print("Number of R users: " + str(r_user_count))
+print("Number of SQL users: " + str(sql_user_count))
+
+print("Proportion of Python users: " + str(python_user_count / num_rows))
+print("Proportion of R users: " + str(r_user_count  / num_rows))
+print("Proportion of SQL users: " + str(sql_user_count  / num_rows))
+
+# Aggregating all years of experience and compensation together into a single list
+experience_coding_column = []
+compensation_column = []
+
+for i in range(num_rows):
+    experience_coding_column.append(survey_responses[i][0])
+    compensation_column.append(survey_responses[i][5])
+    
+# Summarizing the experience_coding column
+min_experience_coding = min(experience_coding_column)
+max_experience_coding = max(experience_coding_column)
+avg_experience_coding = sum(experience_coding_column) / num_rows
+
+print("Minimum years of experience: " + str(min_experience_coding))
+print("Maximum years of experience: " + str(max_experience_coding))
+print("Average years of experience: " + str(avg_experience_coding))    
 
 
+#Summarizing the compensation column
+min_compensation = min(compensation_column)
+max_compensation = max(compensation_column)
+avg_compensation = sum(compensation_column) / num_rows
+
+print("Minimum compensation: " + str(min_compensation))
+print("Maximum compensation: " + str(max_compensation))
+print("Average compensation: " + str(avg_compensation))
 
 
+#categorizing years of experience
 for i in range(num_rows):
 
     if survey_responses[i][0] < 5:
@@ -91,6 +123,7 @@ for i in range(num_rows):
     else:
         survey_responses[i].append("25+ Years")
 
+#Distibution of Experience and Compensation
 
 bin_0_to_5 = []
 bin_5_to_10 = []
