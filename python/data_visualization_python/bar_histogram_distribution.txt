@@ -1,0 +1,56 @@
+More new things about 'exploratory' data visualization.
+* BarPlots = To get visual estimation of the data, we can use bar plot(bar chart). 
+plt.bar() function
+For instance, this is how the bar plot for the casual users averages looks:
+import matplotlib.pyplot as plt
+
+working_days = ['Non-Working Day', 'Working Day']
+casual_avg = [1371, 607]
+
+plt.bar(working_days, casual_avg)
+plt.show()
+
+1. Question:
+a. Generate a bar plot using the plt.bar() function:
+- The working_days list provides the x-coordinates.
+- The registered_avg list provides the heights.
+b. Display the plot using plt.show().
+Answer:
+import matplotlib.pyplot as plt
+working_days = ['Non-Working Day', 'Working Day']
+registered_avg = [2959, 3978]
+plt.bar(working_days, registered_avg)
+plt.show()
+
+' Customizing Bar Plots' :
+To put whatever on x axis to y axis (Flip all the bars horizontally), we use barh
+plt.barh(weekday_averages['weekday'], weekday_averages['casual'])
+plt.yticks(ticks=[0, 1, 2, 3, 4, 5, 6],
+          labels=['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                 'Thursday', 'Friday', 'Saturday'], rotation = 30)
+plt.show()
+
+2. Question:
+a. Generate a bar plot using the weekday_averages variable:
+- The weekday column provides the x-coordinates.
+- The registered column provides the heights.
+b. Change the x-tick labels using the plt.xticks() function.
+- The new labels should be ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].
+- The x-coordinates of the labels are [0, 1, 2, 3, 4, 5, 6].
+- c. All labels are rotated to an angle of 30 degrees.
+Analyze the bar plot in light of our initial observations — does the results support the idea that registered users rent more bikes on working days?
+Answer:
+import pandas as pd
+import matplotlib.pyplot as plt
+bike_sharing = pd.read_csv('day.csv')
+
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+weekday_averages = bike_sharing.groupby('weekday').mean()[['casual', 'registered']].reset_index() # It's not essential to understand how this code works, we'll cover this in a later course
+
+plt.bar(weekday_averages['weekday'], weekday_averages['registered'])
+
+plt.xticks(ticks = [0,1,2,3,4,5,6],
+          labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+                    'Saturday'],
+          rotation = 30)
+plt.show()

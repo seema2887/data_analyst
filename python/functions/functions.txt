@@ -1,0 +1,580 @@
+* One of the aspects of functions that make them great is reusability.
+* Python allows us to use multiple parameters for the functions we create.
+* We generally use functions to automate repetitive tasks.
+'Built-in Functions'
+Python has a couple of ready-made functions like sum(), len(), min(), and max(). These functions
+are already built into Python and are available for immediate use. Because they are already 
+built-in, they are called built-in functions.
+Python, however, doesn't have built-in functions for absolutely every task we might want to do.
+and we might want to use a function to accomplish that repetitive task. 
+Python allows us to write our own functions, which means we can create a function that generates 
+frequency tables
+
+1.Question:
+a. Generate a frequency table for the ratings list (which is already initialized in the code editor).
+* Start by creating an empty dictionary named content_ratings.
+* Loop through the ratings list. For each iteration, do the following:
+* If the rating is already in content_ratings, then increment the frequency of that rating by 1.
+* Else, initialize the rating with a value of 1 inside the content_ratings dictionary.
+b. Print content_ratings.
+
+Answer:
+ratings = ['4+', '4+', '4+', '9+', '12+', '12+', '17+', '17+']
+
+content_ratings = {}
+
+for rating in ratings :
+    if rating in content_ratings:
+        content_ratings[rating] +=1
+    else:
+        content_ratings = 1
+print(content_ratings)
+
+'Creating Our Own Functions'
+We want to create a function named square() that takes in a number as input and returns its square 
+as output. 
+def square(a_number):
+squared_number = a_number * a_number
+return (squared_number)
+'Explaination of above code' :
+To create the square() function above, we did the following:
+
+1. Started with the def statement, where we did the following:
+Specified the name of the function (square)
+Specified the name of the variable (a_number) that will serve as input
+Surrounded the input variable a_number with parentheses
+Ended the line of code with a colon (:)
+2. Specified what we want to do with the input a_number (in the code below the def statement)
+We multiplied a_number by itself: a_number * a_number
+3. Then we assigned the result of a_number * a_number to a variable named squared_number
+4. Ended with the return statement, where we specified what we want returned as the output.
+
+The output is the variable squared_number, which stores the result of a_number * a_number.
+* We use the function three times to compute the square of the numbers 
+6, 4, and 9:
+To compute the square of 6, we use the code square(a_number=6).
+To compute the square of 4, we use the code square(a_number=4).
+To compute the square of 9, we use the code square(a_number=9).
+
+def square(a_number):
+    squared_number = a_number * a_number
+    return squared_number
+
+squared_6 = square(a_number=6)
+squared_4 = square(a_number=4)
+squared_9 = square(a_number=9)
+
+print(squared_6)
+print(squared_4)
+print(squared_9)
+a_number is the input variable, and we can see that it can take various values. 
+This enables us to use the square() function for any number we want.
+
+2.Question:
+a. Recreate the square() function above and compute the square for numbers 10 and 16.
+* Assign the square of 10 to a variable named squared_10.
+* Assign the square of 16 to a variable named squared_16.
+
+Answer:
+def square(a_number):
+    squared-number = a_number * a_number
+    return(squared_number)
+
+squared_10 = square(a_number=10)
+squared_16 = square(a_number=16)
+
+'The Structure of a Function'
+tructurally, the function above contains a header (which contains the def statement), a body, and 
+a return statement. Together, these three elements make up the functions definition. 
+Well often use the phrase "inside the function's definition" to refer to the function's body.
+
+3. Question:
+a. Create a function named add_10() that does the following:
+* Takes a number as the input (name the input variable as you wish)
+* Adds the integer 10 to that number
+* Returns the result of the addition
+b. Use the add_10() function to do the following:
+* Add 10 to the number 30 — assign the result to a variable named add_30
+* Add 1 to the number 9 — assign the result to a variable named add_90
+
+Answer:
+def add_10(number):
+    add = number + 10
+    return add
+
+add_30 = add_10(number=30)
+add_90 = add_10(number=90)
+
+'Parameters and Arguments'
+a_number variable in def square(a_number) is the input variable.
+When we use square(6) instead of square(a_number=6), Python will automatically assign 6 to 
+the a_number variable.
+This means that square(6) is essentially the same thing as square(a_number=6).
+We call input variables like a_number 'parameters'.So, a_number is a parameter of the square() function. 
+When the parameter a_number takes a value (like 6 in square(a_number=6)), we call that value an 
+'argument'.
+eg: For square(a_number=6), we'd say the a_number parameter took in 6 as an argument.
+
+This means we can directly return the result of the expression a_number * a_number and omit
+ the variable assignment step:
+def square(a_number):
+    # Variable assignment step
+    squared_number = a_number * a_number 
+    return squared_number
+
+print(square(6)) //output = 36
+
+def square(a_number):
+    # Variable assignment step omitted
+    return a_number * a_number 
+
+print(square(6)) //output = 36
+
+4. Question
+a. Recreate the square() function by omitting the variable assignment step inside the function's body.
+b. Without typing out the name of the parameter, use the new square() function to compute the square 
+of the numbers 6 and 11.
+* Assign the square of 6 to a variable named squared_6.
+* Assign the square of 11 to a variable named squared_11.
+
+Answer:
+def square(number):
+    return number * number
+
+squared_6 = square(6)
+squared_11 = square(11)
+
+'Extract Values From Any Column':
+To creating a function that generates frequency tables for any column we want in a dataset.
+To generate a frequency table for a certain column, we could do the following:
+1.Extract the values of the column in a separate list
+2.Generate a frequency table for the elements of that list
+One thing we can try is to create a separate function for each of these two tasks:
+1.A function that extracts the values for any column we want in a separate list; and
+2.A function that generates a frequency table for a list.
+
+Using the first function, we can extract the values for any column we want in a separate list. 
+Then, we can pass the resulting list as an argument to the second function, which will output a 
+frequency table for that list.
+
+To extract the values from any column we want from our apps_data data set, we need to do the following:
+Create an empty list.
+Loop through the apps_data data set (excluding the header row), and for each iteration, do the following:
+Store the value from the column we want in a variable.
+Append that value to the empty list we created outside the for loop.
+Below, we see how to extract the values for the cont_ratings column:
+
+content_ratings = []
+for row in apps_data[1:]:
+    content_rating = row[10]
+    content_ratings.append(content_rating)
+
+5.Question
+a. Write a function named extract() that can extract any column you want from the apps_data dataset.
+* The function should take in the index number of a column as input (name the parameter however 
+you want)
+*Inside the function's definition, do the following:
+b. Create an empty list
+* Loop through the apps_data data set (excluding the header). Extract only the value you want by
+using the parameter (which will be an index number)
+* Append that value to the empty list
+* Return the list containing the values of the column
+c. Use the extract() function to extract the values in the prime_genre column. Store them in a
+variable named genres. The index number of this column is 11.
+
+Answer:
+from csv import reader
+opened_file = open('AppleStore.csv')
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+def extract(index):
+column = []
+    for row in apps_data[1:]:
+        value = [index]
+        column.append(value)
+    return column
+
+genres = extract(11)
+
+'Creating Frequency Tables':
+we'll create the second function. To create a frequency table for the elements of a list,
+we need to do the following:
+Create an empty dictionary.
+Loop through that list and check for each iteration where the iteration variable exists as a key 
+in the dictionary created.
+If it exists, then increment by 1 the dictionary value at that key
+Else (if it doesn't exist), create a new key-value pair in the dictionary, where the dictionary key 
+is the iteration variable, and the dictionary value is 1
+
+content_ratings = {}
+ratings = ['4+', '4+', '4+', '9+', '9+', '12+', '17+']
+
+for c_rating in ratings:
+    if c_rating in content_ratings:
+        content_ratings[c_rating] += 1
+    else:
+        content_ratings[c_rating] = 1
+
+print(content_ratings)
+
+{'4+': 3, '9+': 2, '12+': 1, '17+': 1}
+
+6. Question:
+a. Write a function named freq_table() that generates a frequency table for any list.
+* The function should take in a list as input.
+* Inside the function's body, write code that generates a frequency table for that list and stores 
+the table in a dictionary.
+* Return the frequency table as a dictionary.
+b. Use the freq_table() function on the genres list (already defined from the previous screen) 
+to generate the frequency table for the prime_genre column. Store the frequency table to a variable 
+named genres_ft.
+c. Feel free to experiment with the extract() and freq_table() functions to easily create frequency
+tables for any column you want.
+opened_file = open('AppleStore.csv')
+from csv import reader
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+Answer:
+def extract(index):
+    column = []    
+    for row in apps_data[1:]:
+        value = row[index]
+        column.append(value)    
+    return column
+
+genres = extract(11)
+
+def freq_table(column):
+frequency_tabel = {}
+    for value in column:
+        if value in frequency_tabel:
+        frequency_tabel[value] +=1
+    else:
+        frequency_tabel[value] = 1
+    return frequency_tabel
+
+genre_ft = freq_tabel(genres)
+
+'Writing a Single Function':
+We can generate frequency tables without extracting the columns as a separate step. For instance, 
+this is how we generate the frequency table for the content ratings column:
+content_ratings = {}
+
+for row in apps_data[1:]:
+    c_rating = row[10] # we extract the values we want here
+    if c_rating in content_ratings:
+        content_ratings[c_rating] += 1
+    else:
+        content_ratings[c_rating] = 1
+This means we can write a single function to generate the frequency tables for any column we want.
+
+7.Question:
+a. Write a function named freq_table() that generates a frequency table for any column in our iOS 
+apps dataset.
+* The function should take the index number of a column in as an input (name the parameter however 
+you want).
+b. Inside the function's body, do the following:
+* Loop through the apps_data data set (don't include the header row) and extract the value you want 
+by using the parameter (which will be an index number).
+* Build the frequency table as a dictionary.
+* The function should return the frequency table as a dictionary.
+c. Use the freq_table() function to generate a frequency table for the user_rating column 
+(the index number of this column is 7). Store the table in a variable named ratings_ft.
+
+Answer:
+opened_file = open('AppleStore.csv')
+from csv import reader
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+def freq_table(index):
+frequency_table = {}
+    for row in apps_data[1:]:
+        value = row[index]
+    if value in frequency_table:
+        frequency_table[value] += 1
+    else:
+        frequency_table[value] = 1
+    return frequency_table
+
+ratings_ft = freq_table(7) 
+
+'Reusability and Multiple Parameters'
+Our freq_table() function is currently reusable only with respect to the columns we may want to
+generate the frequency tables for.
+We need to increase its reusability by making it reusable with respect to both columns and data sets.
+To do that, we need to change our function to not only take an index value as the input, but also a 
+data set. 
+eg:We need to create function with 2 parameters
+freq_table(index, data_set)
+
+eg: Consider the add() function below, which has two parameters, a and b, and returns their sum:
+ def add(a, b):
+    a_sum = a + b
+    return a_sum
+
+print(add(a=9, b=11))
+// 20
+
+8. Question:
+a. Update the current freq_table() function to make it more reusable.
+* The function should take in two inputs this time: a data set and the index of a column 
+(name the parameters however you want)
+* Inside the function's body, do the following:
+* Loop through the data set using that parameter, which will be a dataset (a list of lists). 
+For each iteration, select the value you want by using the parameter, which will be an index number.
+* Build the frequency table as a dictionary.
+* The function should return the frequency table as a dictionary.
+b. Use the updated freq_table() function to generate a frequency table for the user_rating column 
+(the index number of this column is 7). Store the table in a variable named ratings_ft.
+
+Answer:
+from csv import reader
+opened_file = open('AppleStore.csv')
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+def freq_table(data_set, index):
+frequency_table = {}
+    for row in apps_data[1:]:
+        value = row[index]
+    if value in frequency_table:
+        frequency_table[value] += 1
+    else:
+        frequency_table[value] = 1
+    return frequency_table
+ratings_ft = freq_table(data_set= apps_data, index=7)
+
+ 'Explaination of code'
+ The code above reads in a CSV file containing data about mobile apps from the Apple App Store. 
+ It then defines a function called "freq_table" that takes in a dataset and an index as arguments.
+The function creates an empty dictionary called "frequency_table" and loops through each row in 
+the dataset (excluding the header row). For each row, it retrieves the value at the specified index 
+and checks if it already exists in the frequency table. If it does, it increments the count for that 
+value. If it doesn't, it adds the value to the frequency table with a count of 1. 
+Finally, the function returns the frequency table. The code then calls the freq_table function on the 
+apps_data dataset, specifically on the column containing app ratings (index 7), and assigns the 
+resulting frequency table to the variable "ratings_ft".
+
+'Keyword and Positional Arguments'
+These methods are all valid:
+
+def subtract(a, b):
+    return a - b
+
+print(subtract(a=10, b=7))
+print(subtract(b=7, a=10))
+print(subtract(10,7))
+//3
+
+But this method is not valid:
+def subtract(a, b):
+    return a - b
+
+print(subtract(7,10))
+//-3
+When we use the syntax subtract(a=10, b=7) or subtract(b=7, a=10), we pass in the arguments 10 and 7 
+using the variable names a and b. For this reason, we call them named arguments, or more commonly, 
+'keyword arguments'.
+
+* When we use subtract(10, 7) or subtract(7, 10), we're not clear about which arguments correspond 
+to which parameters. To solve this problem, Python maps arguments with parameters by position; 
+the first argument will map to the first parameter, and the second argument will map to the second 
+parameter. We call arguments that we pass by position 'positional arguments'.
+
+9.Question:
+a. Use the freq_table() function to generate frequency tables for the cont_rating, user_rating, 
+and prime_genre columns.
+* Use positional arguments when you generate the table for the cont_rating column (index number 10). 
+Assign the table to a variable named content_ratings_ft.
+* Use keyword arguments for the user_rating column (index number 7) following the order 
+(data_set, index). Assign the table to a variable named ratings_ft.
+* Use keyword arguments for the prime_genre column (index number 11) following the order 
+(index, data_set). Assign the table to a variable named genres_ft.
+
+Answer:
+from csv import reader
+opened_file = open('AppleStore.csv')
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+def freq_table(data_set, index):
+    frequency_table = {}
+    
+    for row in data_set[1:]:
+        value = row[index]
+        if value in frequency_table:
+            frequency_table[value] += 1
+        else:
+            frequency_table[value] = 1
+        
+    return frequency_table
+
+
+content_ratings_ft = freq_table(apps_data, 10)
+ratings_ft = freq_table(data_set=apps_data, index=7)
+genres_ft = freq_table(index=11, data_set=apps_data)
+
+'Explaination of the code'
+The code above reads in a CSV file containing data about mobile apps from the Apple App Store. 
+It then defines a function called "freq_table" that takes in a dataset and an index as inputs, 
+and returns a frequency table of the values in the specified column of the dataset.
+
+The code then uses this function to create three frequency tables: one for the content ratings of 
+the apps, one for the user ratings of the apps, and one for the genres of the apps. These frequency 
+tables are stored in the variables "content_ratings_ft", "ratings_ft", and "genres_ft", respectively.
+
+Overall, the code is designed to analyze and summarize the data in the CSV file, specifically 
+focusing on the distribution of content ratings, user ratings, and genres among the apps in the 
+dataset.
+
+'Combining Functions':
+def find_sum(a_list):
+    a_sum = 0
+    for element in a_list:
+        a_sum += float(element)
+    return a_sum
+
+def find_length(a_list):
+    length = 0
+    for element in a_list:
+        length += 1
+    return length
+
+Now we can use the find_length() and find_sum() function to create the mean() function:
+
+def mean(a_list_of_numbers):
+    sum_list = find_sum(a_list_of_numbers)
+    len_list = find_length(a_list_of_numbers)
+    mean_list = sum_list / len_list
+
+    return mean_list
+
+list_1 = [10, 5, 15]
+print(mean(list_1))
+
+// 10.0
+
+Notice that we used the find_sum() and the find_length() functions inside the body of the mean() 
+function. We can see that a_list_of_numbers, which is the parameter of the mean() function, becomes 
+an argument for the find_sum() and find_length() functions. This aspect should become more clear when 
+we're using keyword arguments:
+
+def mean(a_list_of_numbers):
+    sum_list = find_sum(a_list = a_list_of_numbers)
+    len_list = find_length(a_list = a_list_of_numbers)
+    mean_list = sum_list / len_list
+
+    return mean_list
+
+list_1 = [10, 5, 15]
+print(mean(a_list_of_numbers = list_1))
+//10.0
+
+10.Question:
+a. Write a function named mean() that computes the mean for any column we want from a data set.
+* The function should take in two inputs: a data set and an index value.
+* Inside the body of the mean() function, use the extract() function to extract the values of a 
+column into a separate list, and then compute the mean of the values in that list using find_sum() and find_length().
+* The function should return the mean of the column.
+b. Use the mean() function to compute the mean of the price column (index number 4). 
+Assign the result to a variable named avg_price.
+
+Answer:
+from csv import reader
+opened_file = open('AppleStore.csv')
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+def extract(data_set, index):
+    column = []    
+    for row in data_set[1:]:
+        value = row[index]
+        column.append(value)    
+    return column
+
+def find_sum(a_list):
+    a_sum = 0
+    for element in a_list:
+        a_sum += float(element)
+    return a_sum
+
+def find_length(a_list):
+    length = 0
+    for element in a_list:
+        length += 1
+    return length
+
+
+def mean(data_set, index):
+    column = extract(data_set, index)
+    return find_sum(column) / find_length(column)
+    
+avg_price = mean(apps_data, 4)
+
+'Debugging Functions'
+When we write more complex functions, it's common to run into errors. As the functions become more 
+complex, it becomes harder to understand where errors come from and what we actually need to fix in 
+our code.
+Consider the mean() function we wrote in the previous exercise. When we call (use) the mean() 
+function, mean() calls three other functions:
+extract()
+find_sum()
+find_length()
+
+# SOLUTION CODE
+opened_file = open('AppleStore.csv')
+from csv import reader
+read_file = reader(opened_file)
+apps_data = list(read_file)
+
+
+The find_sum function will show an error, change str to int/float 
+
+
+def extract(data_set, index):
+    column = []
+    
+    for row in data_set[1:]:
+        value = row[index]
+        column.append(value)
+    
+    return column
+
+def find_sum(a_list):
+    a_sum = 0
+    for element in a_list:
+        a_sum += float(element)
+    return a_sum
+
+def find_length(a_list):
+    length = 0
+    for element in a_list:
+        length += 1
+    return length
+
+def mean(data_set, index):
+    column = extract(data_set, index)
+    return find_sum(column) / find_length(column)
+    
+avg_price = mean(apps_data, 4)
+avg_rating = mean(apps_data, 7)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

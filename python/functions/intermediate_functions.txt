@@ -1,0 +1,389 @@
+'Interfering with the Built-in Functions'
+
+When the function is called with a list as an argument, it will always return the same string.
+1.Question:
+a. Write a function named max() that takes in a list but only returns the string 
+"No max value returned".
+b. Use the max() function on the list a_list. Assign the result to a variable named max_val_test_0.
+c. Print max_val_test_0. Observe how the function returned "No max value returned" instead of 10.
+d. Run the code del max to delete the max() function you wrote. This will allow you to use the 
+built-in max() function again.
+Answer:
+def max(a_list):
+a_string = "No max value returned"
+return a_string
+max_value_test_0 = max(a_list)
+print(max_value_test_0)
+
+del max
+
+'Variable Names and Built-in Functions'
+We shouldn't use the names of built-in functions to name our own functions. We should also avoid 
+naming variables using the names of the built-in functions because this also causes unwanted 
+interference.
+In the code below, we assign 17 (the result of the sum 5 + 12) to a variable named sum. We can see 
+that this interferes with the built-in sum() function — when we call sum(), Python looks for the 
+value stored in the sum variable instead of calling the built-in function.
+
+sum = 5 + 12
+print(sum)    output //17
+
+sum = 5 + 12
+list_1 = [5, 10, 15]
+print(sum(list_1))   output//TypeError: 'int' object is not callable
+
+Since sum is a variable storing the integer 17, running sum(list_1) means running 17(list_1). 
+We cant call the integer 17 like a function, hence the error message: 'int' object is not callable.
+sum = 5 + 12
+list_1 = [5, 10, 15]
+print(17(list_1))        // TypeError: 'int' object is not callable
+
+'Default Arguments'
+When we create a function, we can initiate parameters with certain default values, 
+we call these values 'default arguments'. 
+eg:When we create a function, we can initiate parameters with certain default values — 
+we call these values default arguments. 
+
+def add_value(x, constant=10):
+    return x + constant
+
+print(add_value(3)) // output 13
+
+If we dont pass in an argument, Python will use the default argument. However, if a parameter 
+doesnt have a default argument, we must pass in an argument — otherwise we'll get an error.
+
+def add_value(x, constant=10):
+    return x + constant
+
+print(add_value())
+output:
+TypeError: add_value() missing 1 required positional argument: 'x'
+
+* Default arguments are easy to modify when we call a function:
+def add_value(x, constant=10):
+    return x + constant
+
+print(add_value(3, constant=50))
+print(add_value(3, constant=26))
+print(add_value(3, constant=97))
+
+output:
+53
+29
+100
+
+If all parameters have default arguments, then we can call a function without passing in an argument:
+def add_value(x=9, constant=10):
+    return x + constant
+
+print(add_value())  //19
+ 
+'Round the number to decimals'
+You can use either 'ndigits' or 'positional arguments' to do this
+
+2.Question:
+a. Using the correct parameters and arguments, do the following:
+* Round 3.43 to one decimal point. Assign the result to one_decimal.
+* Round 0.23321 to two decimal points. Assign the result to two_decimals.
+* Round 921.2225227 to five decimal points. Assign the result to five_decimals.
+Answer:
+one_decimal = round(3.43, ndigits=1)
+two_decimals = round(0.23321, 2) or round(0.23321, ndigits=2)
+five_decimals = round(921.2225227, 5) or round(921.2225227, ndigits=5)
+
+'Multiple Return Statements'
+ To use multiple return statements, Combine return with an if statement and an else clause, 
+ we can specify whether we want a sum or a difference returned:
+ def sum_or_difference(a, b, return_sum=True):
+    if return_sum:
+        return a + b
+    else:
+        return a - b
+
+print(sum_or_difference(10, 5, return_sum=True))
+print(sum_or_difference(10, 5, return_sum=False))
+
+output:
+15
+5
+When return_sum is True, the body of the if statement is executes, and the else clause is omitted — 
+this means that return a + b executes, and return a - b is omitted. When return_sum is False, 
+the opposite happens: return a + b is omitted, and return a - b executes.
+
+* there's more than one way to make the sum_or_difference() function work. Below, we redefine the 
+function without using an else clause:
+def sum_or_difference(a, b, return_sum=True):
+    if return_sum:
+        return a + b
+
+    return a - b
+
+print(sum_or_difference(10, 5, return_sum=True))
+print(sum_or_difference(10, 5, return_sum=False))
+
+output:
+15
+5
+Above, if return_sum is True, then return a + b executes, so the function stops, and it doesnt 
+execute any of the remaining code. If return_sum is False, then return a + b doesn't execute, 
+so the function moves forward and eventually reaches the next return statement, which returns a - b.
+
+3.Question:
+a. Add an extra parameter to the open_dataset() function (it's already in the code editor) such that 
+it only returns data sets without header rows.
+* If the parameter indicates that dataset has a header row, the function removes the header row 
+before returning the data set.
+* Else (if the parameter doesn't indicate that dataset doesn't have a header row), the function 
+returns the data set as it is.
+*It's up to you whether you use default arguments or not.
+b. Use the updated open_dataset() function to open the AppleStore.csv file — recall that the 
+AppleStore.csv dataset has a header row. Assign the data set to a variable named apps_data.
+Answer:
+def open_dataset(file_name='AppleStore.csv', header=True):        
+    opened_file = open(file_name)
+    from csv import reader
+    read_file = reader(opened_file)
+    data = list(read_file)
+    
+    if header:
+        return data[1:]
+    else:
+        return data
+    
+apps_data = open_dataset()
+
+'Returning Multiple Variables'
+If we want to write a function that returns a sum and a difference at the same time?
+Python allows us to build functions that return more than just one variable. This means that we can
+create a function that returns both a sum and a difference.
+
+def sum_and_difference(a, b):
+a_sum = a + b
+a_diff = a - b
+return a_sum , a_diff
+sum_diff = sum_and_difference(15 , 5)
+print(sum_diff)
+output:
+20 
+10
+
+You can switch the order of return values
+return  a_diff , a_sum
+output will be
+10
+20
+
+You can print the type
+print(type(sum_diff))
+output: <class 'tuple'>
+
+*'Tuple' : Just like a list, we usually use a tuple to store multiple values. Creating a tuple is 
+similar to creating a list, except we need to use parentheses instead of brackets.
+
+a_list = [1, 'a', 10.5]
+a_tuple = (1, 'a', 10.5)
+
+print(a_tuple)
+print(type(a_tuple))
+output:
+(1, 'a', 10.5)
+<class 'tuple'>
+
+Just like lists, tuples support positive and negative indexing.
+a_list = [1, 'a', 10.5]
+a_tuple = (1, 'a', 10.5)
+
+print(a_tuple[0])
+print(a_list[0])
+print(a_tuple[-1])
+print(a_list[-1])
+output:
+1
+1
+10.5
+10.5
+
+The main difference between tuples and lists is whether we can modify the existing values or not. 
+In the case of tuples, we 'cant' modify the existing values, while in the case of lists, 'we can'. 
+a_list = [1, 'a', 10.5]
+a_list[0] = 99
+print(a_list)
+output
+[99, 'a', 10.5]
+
+a_tuple = (1, 'a', 10.5)
+a_tuple[0] = 99
+print(a_tuple)
+output
+TypeError: 'tuple' object does not support item assignment
+We call tuples 'immutable' data types because we cant change their state after we've created them.
+We call lists 'mutable' data types because we can change their state after we've created them.
+The only way we could modify tuples, and immutable data types in general, is by 'recreating them'.
+Mutable: Lists, Dictionaries
+Immutable: Tuples, Integers, Floats, Strings, Booleans
+
+'More About Tuples'
+When we create a tuple, surrounding the values with parentheses is optional.
+It's enough to write the individual values and separate each with a comma.
+
+a_tuple = 1, 'a' or a_tuple = (1, 'a')
+print(a_tuple)
+print(type(a_tuple))
+ 
+ output(1, 'a')
+<class 'tuple'>
+
+* When we use return a_sum, difference, Python thinks we want the tuple a_sum, difference returned. 
+This is why multiple variables return as tuples. If we want to return a list instead of a tuple, 
+we need to use brackets:
+return [a_sum, difference]
+Output
+[20, 10]
+
+* When we work with tuples, we can assign their individual elements to separate variables in a 
+single line of code.
+apps_data, header = open_dataset()
+a = 1, 2
+first_element = a_element[0]
+second_element = a_element[1]
+print(first_element)
+print(second_element)
+can be written as:
+
+a = 1, 2
+first_element, second_element = a_tuple
+print(first_element)
+print(second_element)
+
+* We can use this variable assignment technique with functions that return multiple variables.
+def sum_and_difference(a, b, do_sum=True):
+    a_sum = a + b
+    difference = a - b
+    return a_sum, difference
+
+a_sum, a_diff = sum_and_difference(15, 5)
+print(a_sum)
+print(a_diff)
+
+output
+20
+10
+
+4.Question
+a. Use the open_dataset() function to open the AppleStore.csv file, which has a header row.
+b. Do the variable assignment step in a single line of code.
+* Assign the header to a variable named header.
+* Assign the rest of the dataset to a variable named apps_data.
+Answer:
+def open_dataset(file_name='AppleStore.csv', header=True):        
+    opened_file = open(file_name)
+    from csv import reader
+    read_file = reader(opened_file)
+    data = list(read_file)
+    
+    if header:
+        return data[1:], data[0]
+    else:
+        return data
+
+apps_data, header = open_dataset()
+
+' Functions — Code Running Quirks'
+We've been using parameters and return statements for all of our functions. Note, however, 
+that parameters and return statements are optional:
+def print_constant():
+    x = 3.14
+    print(x)
+
+print_constant()
+output 3.14
+
+Functions without a return statement don't return any value. Strictly speaking, they return a 
+None value, which represents the absence of a value. The None value is an instance of the 
+NoneType data type (just like 5.321 is an instance of the float data type).
+
+def print_constant():
+    x = 3.14
+    print(x)
+
+j = print_constant()
+print(j)
+print(type(j))
+output
+3.14
+None
+<class 'NoneType'>
+
+we cant access x outside the function definition — Python raises a NameError and says that x 
+isn't defined.
+def print_constant():
+    x = 3.14
+    print(x)
+
+print(x)
+output
+NameError: name 'x' is not defined
+
+'Scopes — Global and Local'
+In the above program, When we call print_constant(), x = 3.14 executes, but the quirk is that Python 
+only saves the x variable temporarily. Python saves x into a kind of temporary memory, which is 
+immediately erased after the print_constant() finishes running.
+
+This explains why x is still undefined even after we call print_constant() — the temporary memory 
+associated with print_constant() is immediately erased after the function finishes running, being 
+freed up for later use.
+If we define x = 3.14 in our main program (outside function definitions), we can use x later on 
+without having to worry that it was erased from memory.
+
+x = 3.14
+
+print('random code')
+print('more random code')
+
+print(x)
+output
+random code
+more random code
+3.14
+
+* The temporary memory associated with a function is isolated from the memory associated with the 
+main program. As a result, we can initialize a variable x = 10 in the main program, and then execute 
+x = 3.14 in the body of a function without overwriting the x variable of the main program.
+
+x = 10
+
+def print_constant():
+    x = 3.14
+    print(x)
+
+print_constant()
+print(x)
+
+output
+3.14 # Function
+10 # Main program
+
+but if i declaire x value in function
+def print_constant():
+    x = 3.14
+    print(x)
+
+print_constant()
+print(x)
+
+output
+NameError: name 'x' is not defined
+# Theres no 'x' variable defined in the main program
+
+* Python searches the global scope if a variable isnt available in the local scope, but the reverse 
+doesnt apply. Python wont search the local scope if it doesn't find a variable in the global scope.
+
+
+
+
+
+
+
+
+
+

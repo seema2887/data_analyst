@@ -1,0 +1,230 @@
+The code below shows how we would convert only the BeginDate column:
+for row in moma:
+    birth_date = row[3] 
+    if birth_date != "":
+        birth_date = int(birth_date)
+    row[3] = birth_date
+
+1. Question:
+Use a for loop to iterate over each row in the moma list of lists. Inside the body of the loop, 
+do the following:
+a. Assign the value from index 6 (Date) to a variable called date.
+b. Use an if statement to check if date is not equal to "".
+c. If date isn't equal to "", convert it to an integer type using the int() function.
+d. Finally, assign the value back to index 6 in the row.
+
+Answer:
+from csv import reader
+opened_file = open('artworks_clean.csv')
+read_file = reader(opened_file)
+moma = list(read_file)
+moma = moma[1:]
+
+# Convert the birthdate values
+for row in moma:
+    birth_date = row[3]
+    if birth_date != "":
+        birth_date = int(birth_date)
+    row[3] = birth_date
+    
+# Convert the death date values
+for row in moma:
+    death_date = row[4]
+    if death_date != "":
+        death_date = int(death_date)
+    row[4] = death_date
+
+# Write your code below
+for row in moma:
+    date = row[6]
+    if date != "":
+        date = int(date)
+    row[6] = Date
+
+* "Calculating Artists Ages":
+
+2. Question:
+a. Create an empty list, ages, to store the artist age data.
+* Use a loop to iterate over the rows in moma.
+* In each iteration, assign the artwork year (at index 6) to date and artist birth year (at index 3) 
+to birth.
+* If the birth date is an int, calculate the age of the artist at the time of creating the artwork, 
+and assign it to the variable age.
+* If birth isn't an int type, assign 0 to the variable age.
+* Append age to the ages list.
+b. Create an empty list final_ages, to store the final age data.
+* Use a loop to iterate over each age in ages. In each iteration, do the following:
+* If the age is greater than 20, assign the age to the variable final_age.
+* If the age is not greater than 20, assign "Unknown" to the variable final_age.
+* Append final_age to the final_ages list.
+
+Answer: (a)
+ages = []
+for row in moma:
+    date = row[6]
+    birth = row[3]
+if type(birth) == int:
+    age = date - birth
+else :
+    age = 0
+ages.append(age)
+
+Answer (b):
+final_ages = []
+for age in ages:
+if age > 20:
+    final_age = age
+else:
+    final_age = "Unknown"
+
+final_ages.append(final_age)
+
+
+* 'Converting Ages to Decades'
+Means if a person age is 34 that means he's in his 30s , 25 means in 20s and so on..
+As a first step toward this, we'll need to remove the last digit in every age:
+
+24 will become 2
+86 will become 8
+50 will become 5
+106 will become 10
+Python stores strings in a list-like structure, which lets us slice them in the same way we would a list.
+
+In order to use this technique with our ages, we'll need to do the following:
+- Convert the integer value to a string.
+- Use slicing to slice all but the last character.
+
+3. Question:
+a. Create an empty list, decades, to store the artist decade data.
+* Iterate over the values in final_ages, and in each iteration, do the following:
+* If age is "Unknown", assign it to the variable decade
+b. If age isn't "Unknown", do the following:
+* Convert the integer value to a string and assign it to the variable decade.
+* Use list slicing to remove the final character of decade.
+* Use the + operator to add the substring "0s" to the end of the string decade.
+* Append decade to the decades list.
+
+Answer:
+decades = []
+
+for age in final_ages:
+    if age == "Unknown":
+        decade = age
+    else: 
+        decade = str(age)
+        decade = decade[:-1]
+        decade = decade + "0s"
+    decades.append(decade)
+
+* ' Summarizing the Decade Data'
+
+4. Question:
+a. Create an empty dictionary, decade_frequency.
+b. Iterate through each item in the decades list. In each iteration, do the following:
+* If the item is not a key in decade_frequency, add it as a key with a value of 1.
+* If the item is a key in decade_frequency, add one to the existing value for that key.
+
+Answer:
+
+decade_frequency = {}
+for key in decade:
+    if key not in decade_frequency:
+        decade_frequency[key] = 1
+    else:
+        decade_frequency[key] +=1
+
+* 'Inserting Variables into Strings'
+If we wanted to insert a list of values into a sentence. Lets say we have some data about one of our 
+friend's favorite numbers:
+name = "Kylie"
+num = 8
+And we wanted to print output like the following:
+
+Kylie's favorite number is 8
+we could use the + operator to combine the values, using str() to convert the integer:
+
+output = name + "'s favorite number is " + str(num)
+print(output)
+Kylie's favorite number is 8
+This is a lot of work for what seems like a simple task. The much easier way is by using 
+str.format() method.
+The str.format() method is a powerful tool that helps us write easy-to-read code while combining 
+strings with other variables.
+
+output = "{}'s favorite number is {}".format("Kylie", 8)
+print(output)
+Kylie's favorite number is 8
+
+str.format() converts the integer to a string. The variables are inserted into the {} in the order
+we pass them as arguments.
+If we want to specify ordering and/or repeat numbers, we can use integers:
+output = "{0}'s favorite number is {1}, {1} is {0}'s favorite number".format("Kylie", 8)
+print(output)
+Kylies favorite number is 8, 8 is Kylie's favorite number
+
+I we want to make things clearer, we can give each variable a name
+
+template = "{name}'s favorite number is {num}, {num} is {name}'s favorite number"
+output = template.format(name="Kylie", num="8")
+print(output)
+Kylie's favorite number is 8, 8 is Kylie's favorite number
+
+5. Question:
+a. We have provided an artist's name and birth year in the artist and birth_year variables.
+
+b. Create a template string to insert the artist and birth_year variables into a string using the 
+format provided above. You may use your choice of the three techniques you learned for specifying 
+which variables go where.
+* Use str.format() to insert the two variables into your template string; assign the result to a variable.
+* Use the print() function to call that variable.
+
+Answer:
+artist = "Pablo Picasso"
+birth_year = 1881
+
+template = "{name}'s birth year is {year}"
+output = template.format(name=artist, year=birth_year)
+print(output)
+
+* 'Creating an Artist Frequency Table'
+6. Question:
+a. Create an empty dictionary, artist_freq.
+b. Iterate through each item in the moma list of lists. In each iteration, do the following:
+* Assign the artist's name (column index 1) to the variable artist.
+* If artist is not a key in artist_freq, add it as a key with a value of 1.
+* If artist is a key in artist_freq, add one to the existing value for that key.
+
+Answer:
+artist_freq = {}
+
+for row in moma:
+    artist = row[1]
+    if artist not in artist_freq:
+        artist_freq[artist] = 1
+    else:
+        artist_freq[artist] +=1
+
+*'Creating an Artist Summary Function':
+
+7. Question:
+a. Create a function artist_summary() that accepts a single argument: the name of an artist.
+b. The function should print a summary of the artist using the steps below:
+* Retrieve the number of works of art from the artist_freq dictionary, and assign it to a variable.
+* Create a template string that uses braces ({}) to insert the name and variables into the string, 
+using the format from the diagram above.(There are 129 artworks by Henri Matisse in the dataset)
+* Use str.format() method to insert the artist's name and number of works of art into the string template.
+* Use the print() function to display the final string.
+c. Use your function to display a summary for the Artist "Henri Matisse".
+
+Answer:
+def artist_summary(artist):
+    num_artworks = artist_freq[artist]
+    template = "There are {num} artworks by {name} in the dataset"
+    output = template.formate(name = artist , num = num_artworks)
+    print(output)
+
+artist_summary("Henry Matisse")
+
+* 'Formatting Numbers Inside Strings':
+
+
