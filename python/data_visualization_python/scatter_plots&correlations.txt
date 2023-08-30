@@ -1,0 +1,253 @@
+'Bike sharing time series' :
+1.Question:
+a. Import the pandas module as pd.
+b. Read in the day.csv file using the pd.read_csv() function. Assign the result to a variable named 
+bike_sharing.
+c. Examine the first and the last five rows.
+d. Display information about the dataset using the DataFrame.info() method. How many rows and columns 
+does this dataset have? Do you see any missing values?
+Answer:
+import pandas as pd 
+bike_sharing = pd.read.csv('day.csv')
+bike_sharing.head(5)
+bike_sharing.tail(5)
+bike_sharing.info()
+
+'Exploring data' :
+- If you see a broad horizontal black bands at the bottom of the graph, the we can use pd.to_datetime()
+function to make the conversion.
+- We need this conversion because the data type of dteday column is object, which is the pandas equivalent 
+of string. When we pass a series of string to plt.plot(), Matplotlib doesn't know how to handel.
+- If the strings are convertible, it's better to convert them explicitly to either a numerical data 
+type or a datetime.
+
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+plt.plot(bike_sharing['dteday'], bike_sharing['cnt'])
+plt.show()
+
+But know we see that the dates are overlapping, to fix it we can use, plt.xticks() function.
+This function has a rotation parameter which we can use to control the angle of rotation.
+plt.plot(bike_sharing['dteday'], bike_sharing['cnt'])
+plt.xticks(rotation = 45)
+plt.show()
+
+* The y-axis has y-ticks — there's also a plt.yticks() function.
+
+2.Question:
+a. Plot two line graphs sharing the same x- and y-axis.
+b. For the first graph, plot the dteday column on the x-axis and the casual column on the y-axis.
+c. For the second graph, plot dteday on the x-axis and registered on the y-axis.
+d. Rotate the x-ticks to an angle of 30 degrees using plt.xticks().
+e. Add the label 'Bikes Rented' to the y-axis using plt.ylabel().
+f. Add the label 'Date' to the x-axis using plt.xlabel().
+g. Add the title 'Bikes Rented: Casual vs. Registered' using plt.title().
+h. Add a legend using plt.legend(). Use 'Casual' and 'Registered' as labels.
+i. What differences and similarities do you see for the two line graphs?
+
+Answer:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read_csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+plt.plot(bike_sharing['dteday'], bike_sharing['casual'], label='Casual')
+plt.plot(bike_sharing['dteday'], bike_sharing['registered'],label='Registered')
+plt.xticks(rotation=30)
+plt.ylabel('Bikes Rented')
+plt.xlabel('Date')
+plt.title('Bikes Rented: Casual vs. Registered')
+plt.legend()
+plt.show()
+
+'Seasonal Trends':
+We see specific pattern occuring at specific intervals of time that is known as 'seasonality'.
+eg: Weather, Holidays, School Vaccations etc can cause seasonality.
+Other eg is ice-cream sales seasonaity, sales are high during summer and low during winter.
+3. Question:
+a. Plot a line graph with the dteday column on the x-axis and the temp column on the y-axis.
+b. Rotate the x-ticks to an angle of 45 degrees using plt.xticks().
+c. Do you see any similarity in how the temperature and the number of bikes rented change?
+
+Answer:
+import pandas as pandas
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read.csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+plt.plot(bike_sharing['dteday'], bike_sharing['temp'])
+plt.xticks(rotation = 45)
+plt.show()
+
+'Scattered Plots' :
+- Above we ploted cnt and temp line graph against dteday. Now to visualize the relationship 
+between cnt and temp , lets plot one against other. We can do this with scatter plot(also called 
+scatter graph or scatter chart)
+- Use plt.scatter() function. Instead of plt.plot()
+- Generally, the first column we pass to plt.scatter(x, y) provides the x-coordinates, and the second 
+one the y-coordinates.
+
+4. Question:
+a. Generate a scatter plot with the windspeed column on the x-axis and the cnt column on the y-axis. Use the plt.scatter() function.
+b. Add the 'Wind Speed' x-axis label using plt.xlabel().
+c. Add the 'Bikes Rented' y-axis label using plt.ylabel().
+d. Display the plot using plt.show().
+
+Answer:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read_csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+plt.scatter(bike_sharing['windspeed'], bike_sharing['cnt'])
+plt.xlabel('Wind Speed')
+plt.ylabel('Bikes Rented')
+plt.show()
+
+'Correlation' :
+-Both the temp and the windpseed columns relate to the cnt column, but in a different way.
+- When the values in temp increase, the values in cnt tend to go up as well (and vice versa). 
+- When the values in temp decrease, the values in cnt tend to go down as well (and vice versa).
+- On the other side, when the values in windspeed increase, the values in cnt don't go up — they tend 
+to decrease instead. When the values in windspeed decrease, the values in cnt tend to go up (and vice 
+versa).
+- In a broad sense, when two columns are statistically related in a specific way and to a certain degree, 
+we call this relationship 'correlation'.
+
+* There are two kinds of correlation: positive and negative.
+- Two positively correlated columns tend to change in the same direction — when one increases 
+(or decreases), the other tends to increase (or decrease) as well.
+- Two negatively correlated columns tend to change in opposite directions — when one increases, 
+the other tends to decrease, and vice versa. 
+
+'Pearson Correlation Coefficient':
+The most popular way to measure correlation strength is by calculating the degree to which the points 
+on a scatter plot fit on a straight line.
+We can measure how well the points fit on a straight line by using the Pearson correlation coefficient — 
+also known as Pearson's r.
+- Pearson's r values lie between -1.00 and +1.00. 
+When the positive correlation is perfect, the Pearson's r is equal to +1.00. 
+When the negative correlation is perfect, the Pearson's r is equal to -1.00. 
+ A value of 0.0 shows no correlation.'
+-If columns X and Y have r = +0.8, and columns X and Z have r = -0.8, then the strength of these two 
+correlations is equal. The minus sign only tells us that the correlation is negative, not that it is 
+weaker.
+For example, even though the number +0.2 is greater than -0.6, a -0.6 correlation is stronger compared 
+to a +0.2 correlation.
+- When we compare correlation strengths, we need to ignore the signs and only look at the absolute r 
+values. The sign only gives us the correlation's direction, not its strength.
+
+5. Question :
+a. The correlation between temp and cnt is +0.63, so it's stronger than the correlation between 
+windspeed and cnt, which is -0.23 (the two correlation values are real). Assign the Boolean True 
+or False to sentence_1.
+b. A correlation of +0.09 shows a weak positive correlation. Assign True or False to sentence_2.
+c. A correlation of 0 shows a very weak negative correlation. Assign True or False to sentence_3.
+d. A perfect positive correlation is equal in strength with a perfect negative correlation. Assign 
+True or False to sentence_4.
+
+Answer:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read_csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+
+sentence_1 = True
+sentence_2 = True
+sentence_3 = False
+sentence_4 = True
+
+ "Measuring Pearson's r" :
+ - To calculate the Pearson's r between any two columns, we can use the Series.corr() method. 
+ - Series.corr() uses a math formula that only works with numbers. This means that Series.corr() only 
+ works with numerical columns — if we use string or datetime columns, we'll get an error.
+ - The order of columns doesn't matter when we use Series.corr().
+ eg: You can write either way: answer is same
+ bike_sharing['temp'].corr(bike_sharing['cnt'])
+bike_sharing['cnt'].corr(bike_sharing['temp'])
+0.6274940090334918
+- The Series.corr() method only allows us to calculate the correlation between two numerical columns.
+- We can get an overview of correlations using the DataFrame.corr() method, which calculates the 
+Pearson's r between all pairs of numerical columns.
+bike_sharing.corr()
+
+Question:
+what if we only want to see the correlation for the cnt, casual, and registered columns? 
+Answer: 
+The DataFrame.corr() method returns a DataFrame, which means we can select the cnt, casual, 
+and registered columns directly.
+bike_sharing.corr()[['cnt', 'registered', 'casual']]
+
+6. Question:
+a. Calculate the Pearson's r between the temp and atemp columns. Assign your answer to temp_atemp_corr.
+b. Calculate the Pearson's r between the windspeed and hum columns. Assign your answer to wind_hum_corr.
+c. Generate a scatter plot with the temp column on the x-axis and the atemp column on the y-axis.
+- Add 'Air Temperature' as an x-label.
+- Add 'Feeling Temperature' as an y-label.
+d. Generate a scatter plot with the windspeed column on the x-axis and the hum column on the y-axis. You'll first need to close the previous scatter plot using plt.show()
+- Add 'Wind Speed' as an x-label.
+- Add 'Humidity' as an y-label.
+
+Answer:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read_csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+temp_atemp_corr = bike_sharing['temp'].corr(bike_sharing['atemp'])
+wind_hum_corr = bike_sharing['windspeed'].corr(bike_sharing['hum'])
+
+plt.scatter(bike_sharing['temp'], bike_sharing['atemp'])
+plt.xlabel('Air Temperature')
+plt.ylabel('Feeling Temperature')
+plt.show()
+
+plt.scatter(bike_sharing['windspeed'], bike_sharing['hum'])
+plt.xlabel('Wind Speed')
+plt.ylabel('Humidity')
+plt.show()
+
+'Categorical columns'
+Generally, numerical columns describe a quantity — how much there is of something.
+But we also have columns that describe qualities — what or how something is. 
+These columns are 'categorical' (or qualitative).
+One example of a categorical column (also called categorical variable) is the workingday column. 
+This column describes the type of day: a working day or a non-working day (weekend or holiday).
+bike_sharing['workingday'].value_counts()
+1    500
+0    231
+Name: workingday, dtype: int64
+(1 means a working day and 0 means a non-working day).
+To replace 1 with 0 and vice versa, 
+bike_sharing['workingday'].replace({1:0, 0:1}, inplace=True)
+
+7.Question:
+a. The worse the weather, the higher the encoding number in the weathersit column. Assign True or False 
+to sentence_1.
+b. The correlation between weathersit and cnt is -0.30 — this means that as the weather gets worse, 
+the number of bike rentals tends to decrease. Assign True or False to sentence_2.
+c. The correlation between weathersit and hum is +0.59 — this means that as the humidity decreases, 
+the weather tends to get better. Assign True or False to sentence_3.
+Answer:
+sentence_1 = True
+sentence_2 = True
+sentence_3 = True
+
+
+
+
+
+
+
+
+
+
+
+
+

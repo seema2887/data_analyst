@@ -1,6 +1,7 @@
 python loop notes1
 
-The 'range()' function allows us to create a list with a consecutive list of integers without having to write each one.
+The 'range()' function allows us to create a list with a consecutive list of integers without having 
+to write each one.
 [1,2,3,4,5]:
 We can write this:
 range(1,6):
@@ -8,14 +9,16 @@ we use a shorthand, like range(6).
  print(range(6))
 
 1.Question:
-Write a for loop that iterates over the first 5 rows in survey_responses and converts the values in the compensation column into an integer. 
+Write a for loop that iterates over the first 5 rows in survey_responses and converts the values in 
+the compensation column into an integer. 
 Note that the compensation column is the 6th column.
 Answer:
 for index in range(6):
     survey_responses[index][5] = int(survey_responses[index][5])
 
 ' Iterating Over Items'
-We used the range(5) object as the sequence we want to iterate over. This method works, but it's confusing to read. In our example, a better 
+We used the range(5) object as the sequence we want to iterate over. This method works, but it's 
+confusing to read. In our example, a better 
 approach would be to iterate over compensation directly:
 compensation = [124267, 236889, 74321, 62593, 36288]
 
@@ -61,9 +64,12 @@ column_names list(<class 'list'>)
 ************************************************************************************************
 
 2.Question
-a. Iterate over the entire survey_responses dataset and update the last column so that it is correctly typed as an integer.
-Note: we are not creating a new list here with the updated data. We're updating survey_responses itself.
-b. After you update the data type, print out the first three rows of survey_responses to confirm that the compensation column has integer values.
+a. Iterate over the entire survey_responses dataset and update the last column so that it is 
+correctly typed as an integer.
+Note: we are not creating a new list here with the updated data. We're updating survey_responses 
+itself.
+b. After you update the data type, print out the first three rows of survey_responses to confirm 
+that the compensation column has integer values.
 
 Answer:
 for row in survey_responses:
@@ -83,27 +89,39 @@ with open('kaggle2021-short.csv') as f:
     survey_responses = kaggle_data[1:]
 
 'Explaination'
-a. The first line imports, or makes available, a function from a module. we import a function named 'reader()' from the 'csv module'.
-The csv module contains Python code that lets us read in data in comma-separated value files, also known as CSV files.
-b. Next, we use the 'open()' function to interact with a file named kaggle2021-short.csv  and store it in a placeholder variable called 'f'.
+a. The first line imports, or makes available, a function from a module. we import a function named 
+'reader()' from the 'csv module'.
+The csv module contains Python code that lets us read in data in comma-separated value files, also 
+known as CSV files.
+b. Next, we use the 'open()' function to interact with a file named kaggle2021-short.csv  and store 
+it in a placeholder variable called 'f'.
 c. This '.csv' file contains all of the Kaggle survey data. 
-d.  'with open' opens and automatically closes a file after reading or writing. It's the recommended way to handle files in Python because
+d.  'with open' opens and automatically closes a file after reading or writing. It's the recommended 
+way to handle files in Python because
  it ensures proper file closure even when errors occur.
-e. In a CSV file, columns are separated by commas, so we pass this information to the 'reader() function with the argument delimiter=",". '
-f. We actually cant do anything with the data in read_file, so we need to convert it into a list. The 'list()' function converts the read_file 
+e. In a CSV file, columns are separated by commas, so we pass this information to the 
+'reader() function with the argument delimiter=",". '
+f. We actually cant do anything with the data in read_file, so we need to convert it into a list. 
+The 'list()' function converts the read_file 
 variable into a list of lists called data.
 
 'Cleaning the Data'
-Data cleaning is the process of identifying and correcting errors, inconsistencies, and inaccuracies in data to make it suitable for 
+Data cleaning is the process of identifying and correcting errors, inconsistencies, and inaccuracies 
+in data to make it suitable for 
 further analysis and use. 
 
 3. Question
-We're interested in summarizing the data in the experience_coding and compensation columns. However, each list in survey_responses is only a single row, so we need to transform the data into a more usable format.
+We're interested in summarizing the data in the experience_coding and compensation columns. However, 
+each list in survey_responses is only a single row, so we need to transform the data into a more 
+usable format.
 
-a. Create two empty lists named experience_coding_column and compensation_column. Iterate through the survey_responses data and do the following 
+a. Create two empty lists named experience_coding_column and compensation_column. Iterate through the 
+survey_responses data and do the following 
 for each row:
-b. Convert the experience_coding column into a float and append the converted values to the experience_coding_column variable.
-c. Convert the compensation column into an integer and append the converted values to the compensation_column variable.
+b. Convert the experience_coding column into a float and append the converted values to the 
+experience_coding_column variable.
+c. Convert the compensation column into an integer and append the converted values to the 
+compensation_column variable.
 
 Answer:
 from csv import reader
@@ -123,7 +141,8 @@ for row in survey_responses:
     experience_coding_column.append(float(row[0]))
     compensation_column.append(int(row[-1]))
 
-'Aggregating the Data' -  to extract the minimum, maximum, and sum of a list. These are all examples of data aggregation
+'Aggregating the Data' -  to extract the minimum, maximum, and sum of a list. These are all examples 
+of data aggregation
 data aggregation -- the process of converting data into a more precise summary. 
 
 compensation = [124267, 236889, 74321, 62593, 36288]
@@ -142,12 +161,15 @@ output
 534358
 
 4. Question
-We've brought over the two isolated numerical columns to this screen (experience_coding_column and compensation_column). Use these lists to answer the following questions:
+We've brought over the two isolated numerical columns to this screen (experience_coding_column and 
+compensation_column). Use these lists to answer the following questions:
 
-a. What is the range of values in the experience_coding_column? Assign your answer to the variable range_experience.
+a. What is the range of values in the experience_coding_column? Assign your answer to the variable 
+range_experience.
 Use the min() and max() functions to find your answer.
 Subtract the minimum value from the maximum value to calculate the range.
-b. What is the average value of the salaries in compensation? Assign your answer to the variable average_compensation.
+b. What is the average value of the salaries in compensation? Assign your answer to the variable 
+average_compensation.
 Use the sum() and len() functions to find your answer.
 
 Answer:
@@ -167,7 +189,8 @@ for row in survey_responses:
 
 'Conditional statements'  
 6. Question
-Does the second person in survey_responses have less than 10 years of experience? Assign the result to the variable more_than_10_years.
+Does the second person in survey_responses have less than 10 years of experience? Assign the result 
+to the variable more_than_10_years.
 Use the first column (experience_coding) to answer this question
 Answer:
 more_than_10_years = survey_responses[1][0] < 10
@@ -178,11 +201,14 @@ print(more_than_10_years)
 The other comparison operators are only useful when we need to compare numerical values.
 
 7. Question
-Like before, survey_responses contains the data and column_names contains the column names. The numerical columns have already been processed.
+Like before, survey_responses contains the data and column_names contains the column names. 
+The numerical columns have already been processed.
 
-a. Does the fifth person in the data earn more than $30,000? Assign your answer to the variable more_than_30k.
+a. Does the fifth person in the data earn more than $30,000? Assign your answer to the variable 
+more_than_30k.
 Use list of list indexing and a comparison operator to find your answer.
-b. Is it "TRUE" that the first person in the data knows Python? Assign your answer to the variable knows_python.
+b. Is it "TRUE" that the first person in the data knows Python? Assign your answer to the variable 
+knows_python.
 Use list of list indexing and a comparison operator to find your answer.
 
 Answer:
@@ -192,28 +218,38 @@ print(more_than_30k)
 knows_python = survey_responses[0][1] == 'TRUE'
 print(knows_python)
 
-'Compound Conditions' - A conditional statement that's composed of multiple conditions is called a compound condition. 
+'Compound Conditions' - A conditional statement that's composed of multiple conditions is called a 
+compound condition. 
 To construct compound conditions, we need to use 'logical operators'. 
 1. and () both conditions need to be true) , 
 2. or (one of the two condition needs to be true)
 
 8. Question
-The data and column names of the data have already been loaded into the code editor. Like before, survey_responses contains the data and column_names contains the column names. The numerical columns have already been processed.
+The data and column names of the data have already been loaded into the code editor. Like before, 
+survey_responses contains the data and column_names contains the column names. The numerical columns 
+have already been processed.
 
-a. Is there at least one person among the first 2 rows in survey_responses that has more than 5 years of experience coding (experience_coding), assign your answer to the variable is_one_experienced.
-Use list of lists indexing, comparison operator(s), and logical operator(s) to create a compound condition that answers the question.
-b. Among the first 3 people in survey_responses, do all of them know SQL (sql_user)? Assign your answer to the variable all_sql_users.
-Use list of lists indexing, comparison operator(s), and logical operator(s) to create a compound condition that answers the question.
+a. Is there at least one person among the first 2 rows in survey_responses that has more than 5 years 
+of experience coding (experience_coding), assign your answer to the variable is_one_experienced.
+Use list of lists indexing, comparison operator(s), and logical operator(s) to create a compound 
+condition that answers the question.
+b. Among the first 3 people in survey_responses, do all of them know SQL (sql_user)? Assign your 
+answer to the variable all_sql_users.
+Use list of lists indexing, comparison operator(s), and logical operator(s) to create a compound 
+condition that answers the question.
 
 Answer:
 is_one_experienced = survey_responses[0][0] > 5 or survey_responses[1][0] > 5
-all_sql_users = survey_responses[0][3] == "TRUE" and survey_responses[1][3] == "TRUE" and survey_responses[2][3] == "TRUE"
+all_sql_users = survey_responses[0][3] == "TRUE" and survey_responses[1][3] == "TRUE" and 
+survey_responses[2][3] == "TRUE"
 
 'if-else'
 9. Question
-a. Write an if-else statement to check if the first person in survey_responses has a compensation that is greater than the average. 
+a. Write an if-else statement to check if the first person in survey_responses has a compensation 
+that is greater than the average. 
 Don't worry about calculating the average. You can hard code it as 53000.
-If they have a salary greater than or equal to the average, assign the string "Above Average" to the variable compensation_status.
+If they have a salary greater than or equal to the average, assign the string "Above Average" to 
+the variable compensation_status.
 Otherwise, assign the string "Below Average" to the variable compensation_status.
 b. Print the result.
 
@@ -228,16 +264,20 @@ else:
     
     print(compensation_status)
 
-'Multiple Branches' - Sometimes we'll need to incorporate more than one branch to an if-else statement. To do this, we use the elif keyword, 
+'Multiple Branches' - Sometimes we'll need to incorporate more than one branch to an if-else statement.
+ To do this, we use the elif keyword, 
 which is short for "else if". 
 The order matters when we set the conditions in an if-else statement.
 
 
 10. Question
-a. Take the value of the experience_coding column from the first row in survey_responses and assign it to the variable first_experience.
-b. Write an if-else statement that will create a variable named experience_category that can take the following values:
+a. Take the value of the experience_coding column from the first row in survey_responses and assign 
+it to the variable first_experience.
+b. Write an if-else statement that will create a variable named experience_category that can take the 
+following values:
 if first_experience is greater than 10, assign "Advanced"
-if first_experience is between 2 and 10, assign "Intermediate" (make sure to include the values of 2 and 10 in this category by using greater/less than or equal to)
+if first_experience is between 2 and 10, assign "Intermediate" (make sure to include the values of 2 
+and 10 in this category by using greater/less than or equal to)
 if first_experience is less than 2 years, assign "Entry Level"
 
 Answer:
@@ -280,10 +320,13 @@ Answer:
 
 'Calculating a Proportion'
 a. Create a variable named count that has the value 0.
-b. Iterate through the survey_responses dataset and increase the value of count by 1 if the person in that row knows SQL.
+b. Iterate through the survey_responses dataset and increase the value of count by 1 if the person 
+in that row knows SQL.
 Use the syntax shortcut we learned on this screen.
-c. After running the for loop, calculate the proportion of people in the survey_responses data who know SQL. Assign your answer to the variable prop_knows_sql.
-Recall that a proportion is calculated as the number of people satisfying a condition, divided by the total number of people.
+c. After running the for loop, calculate the proportion of people in the survey_responses data who 
+know SQL. Assign your answer to the variable prop_knows_sql.
+Recall that a proportion is calculated as the number of people satisfying a condition, divided by 
+the total number of people.
 
 Answer:
 count = 0

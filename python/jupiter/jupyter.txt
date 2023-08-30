@@ -1,0 +1,163 @@
+Jupyter Notebook is much more complex than the code editor we've been working with. Using Jupyter, 
+we can do the following:
+1. Type and execute code
+2. Add accompanying text to our code
+3. Add visualizations
+This combination of code, narrative text, and visualizations is a key element in almost any 
+data project workflow.
+Jupyter makes it easy to combine these three elements, and this is what makes it a must-have tool 
+for anyone working with data. 
+* Jupyter Notebook is a web application, which means it can run in a browser.
+* The big advantage of using Jupyter is that it allows you to easily share your projects with other 
+people (employers included).
+* A notebook is a file created using Jupyter Notebook
+
+* In the code editor to run all cell code:
+go to cell and click run all
+
+'Keyboard Shortcuts'
+There are two modes:
+1. 'Edit mode': A small pencil icon appears to the right of the menu bar when edit mode is active.
+2. 'Command mode' : If we press Esc or click outside the cell when Jupyter is in edit mode, Jupyter 
+enters command mode — the pencil icon disappears when command mode is active.
+
+* It's useful to know the distinction between edit and command mode; each mode has specific 
+keyboard shortcuts. 
+If we go to the Help menu and click Keyboard Shortcuts, we can see the shortcuts specific to each mode.
+* Some of the most useful keyboard shortcuts we can use in 'command mode' include the following:
+
+Ctrl + Enter: run selected cell
+Shift + Enter: run cell, select below
+Alt + Enter: run cell, insert below
+Up: select cell above
+Down: select cell below
+Enter: enter edit mode
+A: insert cell above
+B: insert cell below
+D, D (press D twice): delete selected cell
+Z: undo cell deletion
+S: save and checkpoint
+Y: convert to code cell
+M: convert to Markdown cell
+
+Some of the most useful keyboard shortcuts we can use in 'edit mode' include the following:
+
+Ctrl + Enter: run selected cell
+Shift + Enter: run cell, select below
+Alt + Enter: run cell, insert below
+Up: move cursor up
+Down: move cursor down
+Esc: enter command mode
+Ctrl + A: select all
+Ctrl + Z: undo
+Ctrl + Y: redo
+Ctrl + S: save and checkpoint
+Tab: indent or code completion
+Shift + Tab: tooltip (for instance, if you press Shift + Tab while the cursor is within the 
+parentheses of a built-in function, a tooltip with documentation will pop up)
+
+* To run a code cell without creating a new code cell below it, use (Ctrl + Enter) 
+in mac 'Command + Enter'.
+* 'Shift + Enter' to create new cell
+* To add a cell in between two cells= Cell => 'Run cells and Insert Below' or
+* To run cell and insert a new cell below = 'Option + Enter'
+* To delete cell go to command mode and type d twice 'dd'
+* type %history -p tells what code ran in what order
+* To restart and run all the cell again = go to 'Kernel => Restart & Run All'
+To run all cell below= 'Cell => Run all Below'
+
+
+'State'
+All the code cells of a Jupyter notebook share the same state.
+ add_value(), val, and result are available across different cells because these different 
+ cells share the same state.
+In [4 ]def add_value(x)
+    return x + 5
+    val = 15
+// second cell
+In [2]result = add_value(val)
+// third cell
+In [3]print(result)
+20
+After we run code, the computer remembers what value is assigned to which variable, what function 
+does what, etc. The sum of all this information that the computer remembers about our program is 
+often called state or program state.
+
+def welcome(a_string):
+    print('Welcome to' + a_string + '!')
+dq = 'Dataquest'
+jn = 'Jupyter Notebook'
+py = 'Python'
+
+welcome(dq)
+welcome(jn)
+welcome(py)
+
+Above, we see the first cell has In [4]: on its left, which tells us that it was the fourth cell to run. 
+The second cell has In [2]:, so it was the second cell to run, and the third cell has In [3]:, 
+so it was the third cell to run. In [1]: is missing, which tells us either of the following:
+* One of the existing code cells has run again (and was possibly edited)
+* A code cell ran and was then deleted
+
+'Text and Markdown Cells'
+Accompanying code with text is useful because it allows us to document or explain our code — 
+similar to how we explained our code 
+We show how to add text to explain our code. To do that, we do the following:
+
+* Create a new code cell above our current code cell.
+* Convert the new code cell to a Markdown cell by clicking Markdown on the dropdown menu on the toolbar.
+* Add a snippet of text to explain the behavior of our code. We type "In the code below, we will:" and 
+then we paste the rest of the text.
+* Click the run cell, select below button on the toolbar to run the cell (we can also use the shortcuts 
+Shift + Enter, Alt + Enter, or Ctrl + Enter).
+
+The kind of cell we use to add text is called "Markdown" because it supports Markdown syntax. 
+Markdown syntax allows us to use keyboard symbols to format our text so we can do the following:
+
+* Add italics and bold text
+* Add headers (titles) of various sizes
+* Add hyperlinks and images
+
+'Absolute and Relative Paths'
+We often call the full path of a file (like /home/alex/my_datasets/AppleStore.csv) the 'absolute path'. 
+When we used open('/home/alex/my_datasets/AppleStore.csv'), we specified the absolute path.
+
+When we used open('AppleStore.csv'), we specified the 'relative path' of the file. 
+A relative path is always relative with respect to a certain directory — in our last example above, 
+the relative path was relative to the directory of the notebook file, which was /home/alex.
+
+
+
+
+welcome_message = 'Hello, Jupyter!'
+first_cell = True
+print(welcome_message)
+
+result = 1200/5
+second_cell = True
+print(result)
+
+### Shift + Enter; then Alt + Enter ###
+
+welcome_message = 'Hello, Jupyter!'
+first_cell = True
+
+if first_cell:
+    print(welcome_message)
+    
+print('First cell')
+
+### Ctrl + Enter ###
+
+print('Second cell'
+
+### Ctrl + Enter ###
+
+result = 1200 / 5
+second_cell = True
+
+if second_cell:
+    print(result)
+    
+print('Third cell')
+
