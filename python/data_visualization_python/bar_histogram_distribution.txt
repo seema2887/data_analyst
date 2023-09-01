@@ -1,28 +1,37 @@
 More new things about 'exploratory' data visualization.
-* BarPlots = To get visual estimation of the data, we can use bar plot(bar chart). 
+
+********************
+Situation 'BarPlots' :
+**********************
+
+To get visual estimation of the data, we can use bar plot(bar chart). 
 plt.bar() function
 For instance, this is how the bar plot for the casual users averages looks:
 import matplotlib.pyplot as plt
-
 working_days = ['Non-Working Day', 'Working Day']
 casual_avg = [1371, 607]
-
 plt.bar(working_days, casual_avg)
 plt.show()
 
-1. Question:
+Tasks:
+
 a. Generate a bar plot using the plt.bar() function:
 - The working_days list provides the x-coordinates.
 - The registered_avg list provides the heights.
 b. Display the plot using plt.show().
-Answer:
+
+
+Action:
+
 import matplotlib.pyplot as plt
 working_days = ['Non-Working Day', 'Working Day']
 registered_avg = [2959, 3978]
 plt.bar(working_days, registered_avg)
 plt.show()
 
-' Customizing Bar Plots' :
+************************************
+Situation:'Customizing Bar Plots' :
+*************************************
 To put whatever on x axis to y axis (Flip all the bars horizontally), we use barh
 plt.barh(weekday_averages['weekday'], weekday_averages['casual'])
 plt.yticks(ticks=[0, 1, 2, 3, 4, 5, 6],
@@ -30,7 +39,9 @@ plt.yticks(ticks=[0, 1, 2, 3, 4, 5, 6],
                  'Thursday', 'Friday', 'Saturday'], rotation = 30)
 plt.show()
 
-2. Question:
+
+Tasks:
+
 a. Generate a bar plot using the weekday_averages variable:
 - The weekday column provides the x-coordinates.
 - The registered column provides the heights.
@@ -39,13 +50,17 @@ b. Change the x-tick labels using the plt.xticks() function.
 - The x-coordinates of the labels are [0, 1, 2, 3, 4, 5, 6].
 - c. All labels are rotated to an angle of 30 degrees.
 Analyze the bar plot in light of our initial observations — does the results support the idea that registered users rent more bikes on working days?
-Answer:
+
+
+Action:
+
 import pandas as pd
 import matplotlib.pyplot as plt
 bike_sharing = pd.read_csv('day.csv')
 
 bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
-weekday_averages = bike_sharing.groupby('weekday').mean()[['casual', 'registered']].reset_index() # It's not essential to understand how this code works, we'll cover this in a later course
+weekday_averages = bike_sharing.groupby('weekday').mean()[['casual', 'registered']].reset_index() 
+[# Its not essential to understand how this code works, we'll cover this in a later course]
 
 plt.bar(weekday_averages['weekday'], weekday_averages['registered'])
 
@@ -54,3 +69,160 @@ plt.xticks(ticks = [0,1,2,3,4,5,6],
                     'Saturday'],
           rotation = 30)
 plt.show()
+
+******************************
+Situation: 'Frequency Tables':
+*******************************
+
+We call the number of times that a unique value occurs the 'frequency'.
+And we call series.value_counts() as a 'frequency table'.
+The best way to visualize a frequency table is by using a 'bar plot'.
+eg:
+weather_types = [1, 2, 3, 4]
+frequencies = [463, 247, 21, 0]
+plt.bar(weather_types, frequencies)
+plt.show()
+
+
+Tasks:
+
+a. Generate a bar plot to display the weather patterns in 2012.
+
+- Use the unique_values list for x-coordinates, and the weather_2012 list as bar heights Use plt.xticks() to customize the x-ticks: the only tick labels displayed should be 1, 2, 3, and 4.
+- Use 'Weather Patterns: 2012' as a title.
+- Use 'Frequency' as an y-label.
+- Use 'Unique Values' as an x-label.
+- Close the bar plot using plt.show().
+
+
+Action:
+import matplotlib.pyplot as plt
+
+unique_values = [1, 2, 3, 4]
+weather_2011 = [226, 124, 15, 0]
+weather_2012 = [237, 123, 6, 0]
+
+// below is for 2011 year
+plt.bar(unique_values, weather_2011)
+plt.xticks(ticks=[1,2,3,4])
+plt.title('Weather Patterns: 2011')
+plt.ylabel('Frequency')
+plt.xlabel('Unique Values')
+plt.show()
+
+plt.bar(unique_values, weather_2012)
+plt.xticks(ticks=[1,2,3,4])
+plt.title('Weather Patterns: 2012')
+plt.ylabel('Frequency')
+plt.xlabel('Unique Values')
+plt.show()
+
+***************************************
+Situation: 'Grouped Frequency Tables' :
+***************************************
+
+Lets say we want to know the how many values are present in 'cnt' column in bike_sharing dataset
+ 
+bike_sharing['weathersit'].value_counts()
+output is 696 values.
+- If we generate a frequency table for the cnt column (which describes the total number of bike rentals),
+- It's almost impossible to distinguish any pattern, thats because cnt has 696 unique values.
+- To solve this problem, we can group the unique values into equal intervals.
+- Below, we group the table into ten equal intervals by using the bins=10 argument inside the 
+Series.value_counts() method:
+
+bike_sharing['cnt'].value_counts(bins=10)
+output:
+(4368.0, 5237.2]    137
+(3498.8, 4368.0]    122
+(5237.2, 6106.4]     81
+(6975.6, 7844.8]     79
+(6106.4, 6975.6]     76
+(2629.6, 3498.8]     73
+
+( character indicates starting number is not included.
+] character indicates the ending number is included.
+The interval (4368.0, 5237.2] contains all numbers greater than 4368.0 and less than or equal to 5237.2.
+We can better understand the structure of the table above if we sort the intervals in ascending order.
+
+bike_sharing['cnt'].value_counts(bins=10).sort_index()
+
+
+Tasks:
+
+a. Generate a grouped frequency table for the registered column.
+- The table must have 10 intervals.
+- The intervals must be sorted in ascending order.
+- Assign the table to the registered_freq variable.
+b. Generate a grouped frequency table for the casual column.
+- The table must have 10 intervals.
+- The intervals must be sorted in an ascending order.
+- Assign the table to the casual_freq variable.
+
+
+Action:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bike_sharing = pd.read_csv('day.csv')
+bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
+
+registered_freq = bike_sharing['registered'].value_counts(bins=10).sort_index()
+casual_freq = bike_sharing['casual'].value_counts(bins=10).sort_index()
+
+***************************
+Situation: 'Histograms':
+***************************
+
+- Histograms are one of the most common graphs we use in exploratory data visualization. 
+- They quickly show us the distribution of the values, which in turn can suggest important pattern.
+To generate a histogram for our table, we can use the plt.hist() function
+plt.hist(bike_sharing['cnt'])
+plt.show()
+
+The plt.hist() function did the following:
+1. Generated a grouped frequency table with ten equal intervals for the cnt column.
+2. Plotted a bar for each interval (ten intervals means ten bars). The height of each bar corresponds 
+to the frequency of its corresponding interval.
+- A histogram is a modified bar plot — the main visual difference is that there are no gaps between bars.
+- Another equally-important difference is that each bar represents an interval, not a single value.
+- Not all histograms have symmetrical shapes.
+
+
+***********************
+Topic: 'Distribution':
+***********************
+                                                                 ___
+There are  3 types of distributions                              | |
+1. 'The Normal Distribution' : Its a symmetrical distribution ---   ---
+Symmetrical means If we draw a vertical line exactly in the middle of a symmetrical histogram, 
+then we divide it into two halves that are mirror images of one another.                                                       
+- Most of the values in that column lie in the middle of the range.
+- As we approach the minimum and the maximum points of the range, we have less and less of those values.
+eg:
+we plotted a histogram with the grades students earned on a math test. If the histogram shows a normal 
+distribution, then this means the following:
+- Most of the student performances were average (lying somewhere in the middle between the minimum and 
+the maximum marks).
+- As we approach the minimum and maximum marks, we have less and less students with those performances.
+
+2. 'The Uniform Distribution' : This is also symmetrical distribution, the values are uniformly 
+distributed. The bars have equal height because the intervals have equal frequencies.
+
+eg: If we plotted a histogram for the grades students earned on a math test, and the distribution is 
+uniform, this means that all the marks (or the mark intervals) have the same frequency.
+
+3. 'The Skewed Distributions' : Not all histogram shapes are symmetrical.
+- In a skewed distribution, The values pile up toward the end or the starting point of the range, 
+making up the body of the distribution
+- Then the values decrease in frequency towards the opposite end, forming the tail of the distribution.
+- If the tail points to the right, then the distribution is 'right skewed'.
+- If the tail points to the left, then the distribution is said to be 'left skewed'.
+- When the tail points to the right, it also points in the direction of positive numbers. 
+As a consequence, right-skewed distributions are also said to have a positive skew.
+
+
+
+
+
+

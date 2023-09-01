@@ -1,0 +1,12 @@
+This is again 'exploratory data visualization'. This will help:
+- How to speed up our exploratory data visualization workflow using Pandas.
+- How to better compare graphs using grid charts.
+
+
+************************************
+Topic: 'Traffic Behaviour Dataset':
+************************************
+
+Our dataset describes the urban traffic in the city São Paulo from December 14, 2009 to 
+December 18, 2009 — from Monday to Friday. 
+
