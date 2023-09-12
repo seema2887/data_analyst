@@ -10,3 +10,158 @@ Topic: 'Traffic Behaviour Dataset':
 Our dataset describes the urban traffic in the city São Paulo from December 14, 2009 to 
 December 18, 2009 — from Monday to Friday. 
 
+Task:
+
+a. Import the pandas module as pd.
+b. Read in the traffic_sao_paulo.csv file using pd.read_csv().
+- The data points are separated by ;, so you will need to use sep=';' to read in the file properly.
+- Assign the result to a variable named traffic.
+c. Perform a quick examination of the dataset.
+- Inspect the first and the last five rows.
+-Use DataFrame.info() to print summary information about the dataset. Do you see any missing values? 
+Are all data types numerical?
+
+
+Action: 
+
+import pandas as pd
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep';')
+traffic.head(5)
+traffic.tail(5)
+traffic.info()
+
+* Topic : 'Slowness in Traffic'
+To determine the factors that cause the traffic slowness in São Paulo to worsen.
+Let's begin by exploring the Slowness in traffic (%) column. The data type of this column is object, 
+so we converted it to a float
+
+Tasks:
+
+a. Import matplotlib.pyplot, and plot a histogram for the Slowness in traffic (%) column — run your code without submitting the answer.
+- Display the plot using plt.show().
+b. Based on the histogram, evaluate the truth value of the sentences below.
+- The distribution of Slowness in traffic (%) is right skewed. Assign the Boolean True or False to sentence_1.
+- Most of the values pile up on the left side of the histogram. Assign True or False to sentence_2.
+- Most of the values are over 15.0%. Assign True or False to sentence_3.
+
+Action:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+plt.hist(traffic['Slowness in traffic (%)'])
+plt.show()
+sentence_1 = True
+sentence_2 = True
+sentence_3 = False
+
+* Topic: 'Pandas Visualization Methods'
+A quicker way to generate the same above histogram is to use the Series.plot.hist() method:
+traffic['slowness in traffic'].plot.hist()
+plt.show()
+
+The Pandas library has other useful visualization methods as well:
+
+- Series.plot.bar(): generates a vertical bar plot.
+- Series.plot.barh(): generates a horizontal bar plot.
+- Series.plot.line(): generates a line plot.
+
+
+Tasks:
+
+a. Use the Series.plot.hist() method to generate a histogram for the Slowness in traffic (%) column.
+b. Add the title Distribution of Slowness in traffic (%) (the answer checking is case-sensitive).
+c. Add the x-label Slowness in traffic (%).
+d. Display the plot using plt.show().
+
+
+Action:
+
+import matplotlib.pyplot as plt
+import pandas as pd
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+traffic['Slowness in traffic (%)'].plot.hist()
+plt.title('Distribution of Slowness in traffic (%)')
+plt.xlabel('Slowness in traffic (%)')
+plt.show()
+
+
+* Topic : 'Frequency of Incidents'
+Question: What does (pandas.core.series.Series) mean in Python?
+Answer : pandas is a module (library) that you can use in python. core.series.Series are "sub-module" 
+object or function from your pandas library
+Series is a "sub-module" of series. "pandas" contain "core" that contain "series" that contain "Series"
+- you will find information about pandas here :
+http://pandas.pydata.org/pandas-docs/stable/dsintro.html
+
+tasks:
+
+
+a. Generate a horizontal bar plot for the incidents.sum() table. Run your code without submitting the answer.
+b. Based on the resulting bar plot, evaluate the truth value of the following sentences:
+- Broken trucks are the most frequent cause of slow traffic. Assign the Boolean True or False to sentence_1.
+- Lack of electricity and flooding are less frequent than broken trucks. Assign True or False to sentence_2.
+- The most frequent incident type is broken trucks. Assign True or False to sentence_3.
+
+Actions:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+incidents = traffic.drop(['Hour (Coded)', 'Slowness in traffic (%)'],
+                        axis=1)
+
+incidents.sum().plot.barh()
+plt.show()
+
+sentence_1 = False
+sentence_2 = True
+sentence_3 = True
+___________________________________________________________________________
+incidents = traffic.drop(['Hour (Coded)', 'Slowness in traffic (%)'], axis=1)
+
+'Explaination' : The code above drops two columns ('Hour (Coded)' and 'Slowness in traffic (%)') from a
+DataFrame called 'traffic' using the drop() method. The axis parameter is set to 1 to indicate that the
+columns should be dropped. The resulting DataFrame is assigned to a new variable called 'incidents'.
+The sum() method is then applied to the 'incidents' DataFrame to calculate the total number of 
+incidents for each column. The resulting output is printed to the console. 
+
+
+
+* Topic: 'Correlations with Traffic Slowness'
+
+print(traffic.corr()['Slowness in traffic (%)'])
+Explaination: The code above calculates the correlation between the 'Slowness in traffic (%)' column and all other 
+columns in the 'traffic' dataset. It then prints the resulting correlation values. The correlation 
+coefficient ranges from -1 to 1, where -1 indicates a perfect negative correlation, 0 indicates 
+no correlation, and 1 indicates a perfect positive correlation.
+
+* Instead of writting 
+plt.scatter(traffic['Slowness in traffic (%)'],
+            traffic['Lack of electricity'])
+plt.show()
+
+* We can use Pandas to generate the scatter plot above. Specifically, we can use the 
+DataFrame.plot.scatter() method:
+traffic.plot.scatter(x='Slowness in traffic (%)',
+                     y='Lack of electricity')
+plt.show()
+
+* Topic : 'Traffic Slowness Over 20%'
+
+Here we're going to isolate all the rows where traffic slowness is 20% or more.
+
+
+
+
+
+
+
+
