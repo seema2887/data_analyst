@@ -30,7 +30,11 @@ traffic.head(5)
 traffic.tail(5)
 traffic.info()
 
-* Topic : 'Slowness in Traffic'
+******************************
+Topic : 'Slowness in Traffic'
+*******************************
+
+
 To determine the factors that cause the traffic slowness in São Paulo to worsen.
 Let's begin by exploring the Slowness in traffic (%) column. The data type of this column is object, 
 so we converted it to a float
@@ -57,7 +61,10 @@ sentence_1 = True
 sentence_2 = True
 sentence_3 = False
 
-* Topic: 'Pandas Visualization Methods'
+
+****************************************
+ Topic: 'Pandas Visualization Methods'
+******************************************
 A quicker way to generate the same above histogram is to use the Series.plot.hist() method:
 traffic['slowness in traffic'].plot.hist()
 plt.show()
@@ -89,8 +96,11 @@ plt.title('Distribution of Slowness in traffic (%)')
 plt.xlabel('Slowness in traffic (%)')
 plt.show()
 
+********************************
+Topic : 'Frequency of Incidents'
+*********************************
 
-* Topic : 'Frequency of Incidents'
+
 Question: What does (pandas.core.series.Series) mean in Python?
 Answer : pandas is a module (library) that you can use in python. core.series.Series are "sub-module" 
 object or function from your pandas library
@@ -134,8 +144,10 @@ The sum() method is then applied to the 'incidents' DataFrame to calculate the t
 incidents for each column. The resulting output is printed to the console. 
 
 
+**********************************************
+Topic: 'Correlations with Traffic Slowness'
+*************************************************
 
-* Topic: 'Correlations with Traffic Slowness'
 
 print(traffic.corr()['Slowness in traffic (%)'])
 Explaination: The code above calculates the correlation between the 'Slowness in traffic (%)' column and all other 
@@ -154,7 +166,10 @@ traffic.plot.scatter(x='Slowness in traffic (%)',
                      y='Lack of electricity')
 plt.show()
 
-* Topic : 'Traffic Slowness Over 20%'
+**************************************
+ Topic : 'Traffic Slowness Over 20%'
+**************************************
+
 
 Here we're going to isolate all the rows where traffic slowness is 20% or more.
 
