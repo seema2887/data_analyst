@@ -171,12 +171,180 @@ plt.show()
 **************************************
 
 
-Here we're going to isolate all the rows where traffic slowness is 20% or more.
+Here we're going to isolate all the rows where traffic slowness is 20% or more. Then calculate and 
+visualize the incident frequency.
+
+Tasks:
+
+a. Isolate all the rows where traffic slowness is 20% or more. Assign the new DataFrame to a variable 
+named slowness_20_or_more.
+b. Drop the Slowness in traffic (%) and Hour (Coded) columns from slowness_20_or_more.
+c. Calculate the event frequencies using the DataFrame.sum() method on slowness_20_or_more. 
+Assign the resulting Series to incident_frequencies.
+d. Use incident_frequencies to plot a horizontal bar plot — use a Pandas method.
+e. Examine the plot — what are some high-frequency incidents when traffic slowness is 20% or more?
+
+Action:
+
+import pandas as pd 
+import matplotlib pyplot as plt
+
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep';')
+traffic['slowness in traffic (%)'] = traffic['slowness in traffic (%)'].str.replace(',' , '.')
+traffic['slowness in traffic (%)'] = traffic['slowness in traffic (%)'].astype(float)
+
+slowness_20_or_more = traffic[traffic['slowness in traffic (%)'] >= 20] 
+slowness_20_or_more = slowness_20_or_more.drop(['slowness in traffic (%)' , ['Hour(Coded)'], axis=1)
+incident_frequencies = slowness_20_or_more.sum()
+incident_frequencies = slowness_20_or_more.plot.barh()
+plt.show()
+
+******************************************
+Topic : 'How Traffic Slowness Change'
+******************************************
+ We're going to isolate the data for each day — from Monday to Friday.
+
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+traffic_per_day = {}
+for i, day in zip(range(0, 135, 27), days):
+    each_day_traffic = traffic[i:i+27]
+    traffic_per_day[day] = each_day_traffic
+
+Explaination of above code:
+- days is a list containing five strings representing days of the week:
+['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].
+- The traffic_per_day variable is a Python dictionary. It contains five keys: 
+'Monday', 'Tuesday', 'Wednesday', 'Thursday', and 'Friday'. For each key, we have a DataFrame containing
+only the data for that specific day. For instance, traffic_per_day['Monday'] has only the data for Monday:
+- We use the zip() function above to iterate over range() and days at the same time.
+- The zip() function is used to combine two or more iterables element-wise, 
+creating a new iterable with pairs of corresponding elements from the input iterables.
+-In this code, there are two lists being zipped together:
+1. range(0, 135, 27) creates a list-like object containing numbers from 0 to 135 (exclusive) in increments 
+of 27. So it produces the sequence [0, 27, 54, 81, 108].
+2. days is a list containing five strings representing days of the week:
+['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].
+
+- zip(range(0, 135, 27), days) combines these two iterables into a new iterable, which looks like below:
+[(0, 'Monday'), (27, 'Tuesday'), (54, 'Wednesday'), (81, 'Thursday'), (108, 'Friday')
+
+- The code inside the loop calculates a slice of the traffic list for each day, starting at index i and 
+ending at index i + 27. This each_day_traffic slice is then added to the traffic_per_day dictionary
+with the day of the week as the key.
+
+- When the loop finishes executing, traffic_per_day will contain the traffic data for each day of the 
+week in separate entries.
+
+* To visualize how the values of a column change over time, we can use a line plot. To generate a line 
+plot out of a DataFrame, we can use the DataFrame.plot.line() method.
+
+'plt.ylim([0, 25])' to make the range of the y-axis the same for all plots — this helps with comparison.
+traffic_per_day['Monday'].plot.line(x='Hour (Coded)',
+                                    y='Slowness in traffic (%)')
+plt.show()
 
 
+Tasks:
+
+a. Create a separate line plot for each day by using a for loop. Iterate over the days list, and for 
+each day, do the following:
+- Plot a line plot using the DataFrame.plot.line() method — Hour (Coded) must be on the x-axis and 
+Slowness in traffic (%) on the y-axis.
+- Add a title to the plot using the name of the day.
+- Use plt.ylim([0, 25]) to make the range of the y-axis the same for all plots — this helps with 
+comparison.
+- Close and display each plot with plt.show().
 
 
+Action:
 
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+traffic_per_day = {}
+for i, day in zip(range(0, 135, 27), days):
+    each_day_traffic = traffic[i:i+27]
+    traffic_per_day[day] = each_day_traffic
+
+
+for day in days:
+    traffic_per_day[day].plot.line(x='Hour (Coded)',
+                                   y='Slowness in traffic (%)')
+    plt.title(day)
+    plt.ylim([0, 25])
+    plt.show()
+
+
+*******************************
+Situation : Comparing Graphs
+*******************************
+DataFrame.plot.line()-  It plots separate graphs by default, which means we won't be able to put all 
+the lines on the same graph.
+ Instead of the DataFrame.plot.line() method, we use plt.plot().
+
+
+Tasks:
+
+a. Generate all the five line plots on a single graph. Use a for loop over the days list, and for each 
+day, do the following
+-Plot a line plot using plt.plot(): Hour (Coded) must be on the x-axis and Slowness in traffic (%) on 
+the y-axis.
+b. Add a legenbd to the graph.
+- Outside the for loop, use plt.legend().
+- Inside the for loop, use the label parameter inside plt.plot() — the label should be the day name.
+
+
+Action: 
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+traffic_per_day = {}
+for i, day in zip(range(0, 135, 27), days):
+    each_day_traffic = traffic[i:i+27]
+    traffic_per_day[day] = each_day_traffic
+
+
+for day in days:
+    plt.plot(traffic_per_day[day]['Hour (Coded)'],
+             traffic_per_day[day]['Slowness in traffic (%)'],
+             label=day)
+
+plt.legend()
+plt.show()
+
+
+In a  line graph there are lines which are closer to one another, which makes graph harder to read
+Some of them even intersects with other lines, a solution to this is to use a 'grid chart' also called
+a small multiple. The main purpose of a grid chart is to ease comparison.
+- To create a grid chart we use the plt.figure() function.
+- The second step is to create the first plot. You can also call the plots on a grid chart subplots.
+use the plt.subplot() function to create our first plot
+- We can specify the number of rows and columns for our grid chart by using the 
+plt.subplot(nrows, ncols, index) function.
+ For instance, plt.subplot(3, 2, 1) means that we want to build the plot with index 1 on a grid chart 
+ that has 3 rows and 2 columns.
+
+ eg:
+plt.figure()
+plt.subplot(3, 2, 1) // 1 is the index
+plt.subplot(3, 2, 2)
+plt.subplot(3, 2, 6) // 6 is the index
+plt.subplot(3, 2, 3)
+plt.subplot(3, 2, 4)
+plt.subplot(3, 2, 5)
+plt.show()
+plt.show()
 
