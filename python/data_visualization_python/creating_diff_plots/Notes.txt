@@ -1,0 +1,11 @@
+- DataFrame.plot.line()-  It plots separate graphs by default, which means we won't be able to put all 
+the lines on the same graph.
+ Instead of the DataFrame.plot.line() method, we use plt.plot().
+- Visually, the graph uses Matplotlib defaults. To switch to Seaborn defaults, we need to call 
+the sns.set_theme() function:
+- How do you find the correlation of a scatter plot?
+Upward shows positive correlation, downward means negative.
+Otherwise if there does not seem to be any pattern, it is safe to say that x and y are not correlated.
+
+
+

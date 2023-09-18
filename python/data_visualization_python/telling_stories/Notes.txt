@@ -1,0 +1,53 @@
+1. Define both fig and axes
+fig,ax = plt.subplots()
+2. Use Axes.barh() to create horizontal bar plot.
+3. To change the proportions, we can use the figsize parameter.
+fig, ax = plt.subplots(figsize=(3, 5))  // 3= width and 5=height
+4. There are 2 design principles
+a. Familarity.
+b. maximizing data elements on a graph.
+5. To maximize data ink, we can do:
+a. Erase non-data ink
+b. Erase redundant data-ink
+6. 'non-data ink' — we can remove them without losing
+ any important information :
+ 'The axes' and 'The ticks'
+- To remove the axes(also called spines), Axes.spines[position].set_visible(bool) method,
+If we want to remove all the spines, the fastest way is to use a for loop:
+ax.spines[location].set_visible(False)
+- To remove the ticks, we can use the Axes.tick_params(bottom, top, left, right) method.
+ax.tick_params(bottom=False, left=False)
+- To make the bars less thick, we can use the height parameter inside the Axes.barh() method.
+ax.barh(top20_deathtoll['Country_Other'],
+        top20_deathtoll['Total_Deaths'],
+        height=0.1)
+
+- To remove some of the x-tick labels, we use the Axes.set_xticks method.
+- If we only keep the labels 0, 100000, 200000, and 300000.
+ax.set_xticks([0, 100000, 200000, 300000])
+ - We can move the tick labels at the top of the graph using the Axes.xaxis.tick_top() method:
+ax.axixs.ticks_top()
+ax.tick_paramas(top=False, left=False)
+- to make the ticks(the numbers [0,100000,200000]) grey
+ax.tick_params(axis='x', colors='grey')
+- To make the bar red in color or any color we can put that in Axes.barh(color)method.
+# Assume the rest of the code is written
+ax.barh(total_deaths_20['Country_Other'],
+        total_deaths_20['Total_Deaths'],
+        height=0.45, color='#af0b1e')
+
+- To give the title and Subtitle to the plot use the Axes.text() method.
+ax.text(x=0.5, y=18, s='Title example')
+ax.text(x=0.5, y=17, s='Subtitle example')
+plt.show()
+- The Axes.text() method has a size parameter we can use to control the text size. Also, it has a 
+weight parameter that enables us to bold the text.
+fig, ax = plt.subplots()
+ax.bar(['A', 'B', 'C'],
+       [2, 4, 16])
+ax.text(x=0.5, y=18, s='Title example',
+        size=15, weight='bold')
+ax.text(x=0.5, y=17, s='Subtitle example',
+        size=12)
+plt.show()
+

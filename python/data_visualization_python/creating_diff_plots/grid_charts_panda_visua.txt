@@ -284,7 +284,7 @@ for day in days:
 *******************************
 Situation : Comparing Graphs
 *******************************
-DataFrame.plot.line()-  It plots separate graphs by default, which means we won't be able to put all 
+DataFrame.plot.line() - It plots separate graphs by default, which means we won't be able to put all 
 the lines on the same graph.
  Instead of the DataFrame.plot.line() method, we use plt.plot().
 
@@ -326,6 +326,10 @@ plt.legend()
 plt.show()
 
 
+************************
+Topic: Grid charts
+************************
+
 In a  line graph there are lines which are closer to one another, which makes graph harder to read
 Some of them even intersects with other lines, a solution to this is to use a 'grid chart' also called
 a small multiple. The main purpose of a grid chart is to ease comparison.
@@ -346,5 +350,256 @@ plt.subplot(3, 2, 3)
 plt.subplot(3, 2, 4)
 plt.subplot(3, 2, 5)
 plt.show()
+
+// Now the plots are overlapping. To fix this, increase the size of the entire figure by using 
+plt.figure(figsize=(width, height)).
+
+plt.figure(figsize=(10, 12))
+
+* When we need to use the plt.subplot() function multiple times, it's better to use a for loop. Below, 
+for instance, we create all the six plots with significantly less code.
+
+Instead of writing seperate code foe all days 
+plt.figure(figsize=(10, 12))
+
+# The first subplot
+plt.subplot(3, 2, 1)
+plt.plot(traffic_per_day['Monday']['Hour (Coded)'],
+        traffic_per_day['Monday']['Slowness in traffic (%)'])
+plt.title('Monday')
+
+# The second subplot
+plt.subplot(3, 2, 2)
+plt.plot(traffic_per_day['Tuesday']['Hour (Coded)'],
+        traffic_per_day['Tuesday']['Slowness in traffic (%)'])
+plt.title('Tuesday')
+
+# The third subplot
+plt.subplot(3, 2, 3)
+plt.title('Wednesday')
+
+# The rest of the subplots
+plt.subplot(3, 2, 4)
+plt.subplot(3, 2, 5)
+plt.subplot(3, 2, 6)
+
 plt.show()
 
+You can write a for loop
+
+plt.figure(figsize = (10, 12))
+
+for i in range(1, 7):
+plt.subplot(3, 2, i)
+plt.show()
+
+
+Tasks:
+
+a. Create a new figure with figsize=(10,12).
+b. Create the first five plots using a for loop. Use the zip() function to iterate over both a range 
+(use the range() function) and the days list. For each iteration, do the following:
+- Add the proper index number inside plt.subplot(nrows, ncols, index).
+- Generate a line plot for each day — Hour (Coded) must be on the x-axis and Slowness in traffic (%) 
+on the y-axis.
+- Add the day name as a plot title.
+- Bring the plot to a 0-25 range on the y-axis.
+
+
+Actions:
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+traffic = pd.read_csv('traffic_sao_paulo.csv', sep=';')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.')
+traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].astype(float)
+
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+traffic_per_day = {}
+for i, day in zip(range(0, 135, 27), days):
+    each_day_traffic = traffic[i:i+27]
+    traffic_per_day[day] = each_day_traffic
+
+
+plt.figure(figsize=(10,12))
+
+for i, day in zip(range(1,6), days):
+    plt.subplot(3, 2, i)
+    plt.plot(traffic_per_day[day]['Hour (Coded)'],
+        traffic_per_day[day]['Slowness in traffic (%)'])
+    plt.title(day)
+    plt.ylim([0,25])
+    
+plt.show()
+
+
+Task:
+
+
+a. Add a new subplot with index number 6.
+b. Generate the line plot showing all the days on a single graph, and add a legend to the graph.
+c. Bring the y-range to [0, 25].
+
+
+Action:
+
+plt.subplot(3, 2, 6)
+for day in days:
+    plt.plot(traffic_per_day[day]['Hour (Coded)'],
+        traffic_per_day[day]['Slowness in traffic (%)'],
+        label = day)
+    plt.legend()
+plt.ylim([0, 25])
+plt.show()
+
+
+
+
+
+
+'The I-94 Dataset'
+import pandas as pd
+traffic = pd.read_csv('Metro_Interstate_Traffic_Volume.csv')
+traffic.head(5)
+traffic.tail(5)
+traffic.info()
+
+2.// Analyzing Traffic Volume
+import matplotlib.pyplot as plt         
+%matplotlib inline
+traffic['traffic_volume'].plot.hist()
+plt.show()
+
+traffic['traffic_volume'].describe()
+
+3. // Traffic Volume: Day vs. Night
+Transform the date_time column to datetime by using the function pd.to_datetime().
+Use the Series.dt.hour property to get the hour of every instance of the date_time column and do the following:
+Isolate the daytime data.
+Isolate the nighttime data.
+
+traffic['date_time'] = pd.to_datetime(traffic['date_time'])
+day = traffic.copy()[(traffic['date_time'].dt.hour >= 7) & (traffic['date_time'].dt.hour < 19)]
+print(day.shape)
+
+night = traffic.copy()[(traffic['date_time'].dt.hour >= 19) | (traffic['date_time'].dt.hour < 7)]
+print(night.shape)
+
+4. // Traffic Volume: Day vs. Night 
+Plot the histograms of traffic_volume for both day and night. Organize the two histograms side-by-side on a grid chart.
+For both histograms, do the following:
+Add a title.
+Add x- and y-labels.
+Bring the x- and the y-axis to the same ranges (this will help you compare the histograms correctly).
+Use Series.describe() to look up a few statistics for traffic_volume for both day and night.
+Analyze the results:
+What shape do the histograms have and what does that indicate?
+If the traffic is light at night, and our goal is to find indicators of heavy traffic, should we still be using the nighttime data?
+
+plt.figure(figsize=(11, 3.5))
+
+plt.subplot(1,2,1)
+plt.hist(day['traffic_volume'])
+plt.xlim(-100 , 7500)
+plt.ylim(0, 8000)
+plt.title('Traffic Volume: Day')
+plt.ylabel('Frequency')
+plt.xlabel('Taffic Volume')
+
+plt.subplot(1,2,2)
+plt.hst(night['traffic_volume'])
+plt.xlim(-100, 7500)
+plt.ylim(0, 8000)
+plt.title('traffic Volume: Night')
+plt.ylabel('Frequency')
+plt.xlabel('Traffic Volume')
+day['traffic_volume'].describe()
+night['traffic_volume'].describe()
+
+5. // Time Indicators(I)
+Copy the code above and run it into your notebook to get the monthly traffic volume averages.
+Generate a line plot to visualize how the traffic volume changed each month on average.
+
+day['month'] = day['date_time'].dt.month
+by_month = day.groupby('month').mean()
+by_month['traffic_volume'].plot.line()
+plt.show()
+
+day['year'] = day['date_time'].dt.year
+only_july = day[day['month'] == 7]
+only_july.groupby('year').mean()['traffic_volume'].plot.line()
+plt.show()
+
+- Use day['date_time'].dt.month to create a new column where each value describes the month when 
+the traffic volume measurement was taken.
+- Use day.groupby('month').mean() to group the dataset by the month column with the mean as an 
+aggregate function.
+
+6. Time Indicators (II)
+Generate a line plot to visualize how the traffic volume changed each day of the week on average.
+Analyze the line plot. Do you notice any difference between business days and the weekend?
+
+day['dayofweek'] = day['date_time'].dt.dayofweek
+by_dayofweek = day.groupby('dayofweek').mean()
+by_dayofweek['traffic_volume'].plot.line()
+plt.show()
+
+7. Time Indicators (III)
+Plot two line plots on a grid chart to visualize how the traffic volume changes by time of the day.
+One plot shows how traffic volume changes during business days and the other shows how it changes during weekends.
+Add a title to each graph.
+Bring both graphs to the same x- and y-axis range.
+Analyze both charts. How do they compare? When are the rush hours on business days?
+Summarize all your findings regarding time indicators for heavy traffic.
+
+
+day['hour'] = day['date_time'].dt.hour
+bussiness_days = day.copy()[day['dayofweek'] <= 4] # 4 == Friday
+weekend = day.copy()[day['dayofweek'] >= 5] # 5 = Saturday
+by_hour_business = bussiness_days.groupby('hour').mean()
+by_hour_weekend = weekend.groupby('hour').mean()
+
+
+plt.figure(figsize=(11,3.5))
+
+plt.subplot(1, 2, 1)
+by_hour_business['traffic_volume'].plot.line()
+plt.xlim(6,20)
+plt.ylim(1500,6500)
+plt.title('Traffic Volume By Hour: Monday–Friday')
+
+plt.subplot(1, 2, 2)
+by_hour_weekend['traffic_volume'].plot.line()
+plt.xlim(6,20)
+plt.ylim(1500,6500)
+plt.title('Traffic Volume By Hour: Weekend')
+
+plt.show()
+
+8. Weather Indicators
+Find the correlation values between traffic_volume and the numerical weather columns.
+Find the weather column with the strongest correlation with traffic_volume and plot a scatter plot for this weather column and traffic_volume.
+Do any of these weather columns seem like reliable indicators for heavy traffic?
+
+day.corr()['traffic_volume']
+day.plot.scatter('traffic_volume', 'temp')
+plt.ylim(230, 320) # two wrong 0K temperatures mess up the y-axis
+plt.show()
+
+
+9. Weather types
+Plot a horizontal bar plot for the traffic_volume column of by_weather_main.
+Analyze the bar plot. Is there any traffic volume exceeding 5,000 cars? Can you find any weather type as a heavy traffic indicator?
+Plot a horizontal bar plot for the traffic_volume column of by_weather_description. This column has many unique values, so you'll need to enlarge the figure size to make it readable. You can use plt.figure(figsize=(width,height)) or Series.plot.barh(figsize=(width,height)).
+Analyze the bar plot. Is there any traffic volume exceeding 5,000 cars? Can you find any weather type as a heavy traffic indicator?
+Write up your conclusions for the entire project — this was the last step.
+
+by_weather_main = day.groupby('weather_main').mean()
+by_weather_main['traffic_volume'].plot.barh()
+plt.show()
+
+by_weather_description = day.groupby('weather_description').mean()
+by_weather_description['traffic_volume'].plot.barh(figsize=(5,10))
+plt.show()

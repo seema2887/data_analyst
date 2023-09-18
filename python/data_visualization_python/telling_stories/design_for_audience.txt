@@ -1,0 +1,241 @@
+****************************
+Topic: 'Design for Audience'
+****************************
+
+- We need to decide which type of graph to use. To make a good decision, we need to choose a graph that 
+our audience can easily understand.
+- The 'familiarity' principle typically favors simple graphs over complicated, eye-catching graphs.
+- To display the top 20 countries by number of deaths, a horizontal bar plot should work well enough.
+
+Tasks:
+
+a. Read in the top20_deathtoll.csv file into a pandas DataFrame. Assign the result to top20_deathtoll.
+b. Using matplotlib, create a horizontal bar plot to display the top 20 countries by number of total 
+deaths.
+
+
+Action:
+import pandas as pd
+import matplotlib.pyplot as plt
+top20_deathtoll = pd.read_csv('top20_deathtoll.csv')
+
+plt.barh(top20_deathtoll['Country_Other'],
+         top20_deathtoll['Total_Deaths'])
+plt.show()
+
+
+*********************************
+Topic:  'Matplotlib Interfaces'
+*********************************
+
+- To make the changes we want, we will use matplotlib's object-oriented interface.
+- Matplotlib has two interfaces:
+1. A functional interface: we use functions to create and modify plots.
+2. An object-oriented (OO) interface: we use methods to create and modify plots.
+- The functional interface is simpler and easier to use (when we created and modified graphs using 
+functions from the matplotlib.pyplot submodule: plt.plot(), plt.scatter(), plt.title(), plt.xlim(), etc.). 
+But the OO interface offers more power and flexibility in graph editing.
+
+
+***************************
+Topic: 'The OO Interface'
+***************************
+1. Define both fig and axes
+fig,ax = plt.subplots()
+
+2. Use Axes.barh to create horizontal bar plot
+ax.barh((top20_deathtoll['Country_Other'],
+         top20_deathtoll['Total_Deaths']))
+plt.show()
+
+
+*************************************
+Topic: 'Mobile-Friendly Proportions'
+*************************************
+- We know that a large part of our audience will read the article on a mobile device. 
+This means our graph needs to have mobile-friendly proportions: small width, larger height.
+
+To change the proportions, we can use the figsize parameter inside the 
+plt.subplots(figsize=(width, height)) function:
+
+fig, ax = plt.subplots(figsize=(3, 5))
+ax.barh(['A', 'B', 'C'],
+        [2, 4, 16])
+plt.show()
+
+
+*******************************
+Topic: 'Maximizing Data-Ink' 
+********************************
+
+When we design graphs,we need design principles to guide us. Design principles help us in two ways:
+1. They generate design options.
+2. They help us choose among those options.
+
+* One design principle is 'Familarity' which we saw above.
+* The next design is 'maximizing data elements on a graph'.
+
+- A graph has 3 elements:
+1. Data elements: the numbers and the categories visually represented and the relationships between them.
+2. Structural elements: the axes, the ticks, the legend, the grid, etc.
+3. Decorations: extra colors, shapes, artistic drawings etc.
+
+* Data-ink ratio = data-ink / total ink used to print the graph
+
+*******************************
+Topic : 'Erasing Non-Data Ink'
+********************************
+
+To maximize data ink, we can do:
+1. Erase non-data ink
+2. Erase redundant data-ink
+
+- There are two structural elements that constitute 'non-data ink' — we can remove them without losing
+ any important information :
+
+1. 'The axes' - To remove the axes(also called spines), Axes.spines[position].set_visible(bool) method,
+Where position is a string indicating location of the axes('left', 'right', 'top', 'bottom').
+If we want to remove all the spines, the fastest way is to use a for loop:
+
+fig, ax = plt.subplots()
+ax.bar(['A', 'B', 'C'],
+       [2, 4, 16])
+
+for location in ['left', 'right', 'bottom', 'top']:
+    ax.spines[location].set_visible(False)
+
+plt.show()
+
+2. 'The ticks' : To remove the ticks, we can use the Axes.tick_params(bottom, top, left, right) method.
+
+fig, ax = plt.subplots()
+ax.bar(['A', 'B', 'C'],
+       [2, 4, 16])
+
+ax.tick_params(bottom=False, left=False)
+plt.show()
+
+
+*************************************
+Topic: 'Erasing Reduntant Data_Ink'
+*************************************
+
+- For our horizontal bar plot, we can make the bars less thick and remove some of the x-tick labels.
+- To make the bars less thick, we can use the height parameter inside the Axes.barh() method. 
+  The height parameter has a default value of 0.8
+eg:
+
+fig, ax = plt.subplots(figsize=(4.5, 6))
+ax.barh(top20_deathtoll['Country_Other'],
+        top20_deathtoll['Total_Deaths'],
+        height=0.1)
+plt.show()
+
+- To remove some of the x-tick labels, we use the Axes.set_xticks method.
+If we only keep the labels 0, 100000, 200000, and 300000.
+
+fig, ax = plt.subplots(figsize=(4.5, 6))
+ax.barh(top20_deathtoll['Country_Other'],
+        top20_deathtoll['Total_Deaths'])
+ax.set_xticks([0, 100000, 200000, 300000])
+plt.show()
+
+
+********************************
+Topic : 'Direction of Reading'
+********************************
+
+People usually start from top left and follow a zigzag pattern until they reach bottom right.
+we're going to move the tick labels at the top of the graph using the Axes.xaxis.tick_top() method:
+ax.xaxis.tick_top()
+We now need to remove the top ticks instead of the bottom ones:
+ax.xaxis.tick_top()
+ax.tick_params(top=False, left=False)
+Right now, the first thing people will probably see are the x-tick labels. We want readers to focus on the data, so we'll do two things:
+
+1. We'll color the x-tick labels in grey so they don't stand out visually so much.
+2. We'll color the bars in a shade of red.
+
+To color the x-tick labels, we use the same Axes.tick_params() method.
+# Assume the rest of the code is written
+ax.xaxis.tick_top()
+ax.tick_params(top=False, left=False)
+ax.tick_params(axis='x', colors='grey')
+
+- To change the color of the bar we use color parameter in Axes.barh(color) method.
+This parameter accepts HEX color codes, and we use #af0b1e to get a shade of red. 
+
+ax.barh(total_deaths_20['Country_Other'],
+        total_deaths_20['Total_Deaths'],
+        height=0.45, color='#af0b1e')
+
+
+******************************
+Topic : 'Title and Subtitle'
+******************************
+
+- If someone looks at our graph, they won't be able to tell what the quantity means. They see the USA has 
+almost 300,000 of something, but what is that something?
+- Instead of adding an x-axis label, we'll use the title and subtitle area to give the readers the 
+necessary details.
+1. Add a subtitle that explains what the quantity describes and when the data was collected.
+2. Use the title to show readers more data — we'll report that the death toll worldwide has 
+surpassed 1.5M
+- The title must be data ink
+- To add a title and a subtitle, we're going to use the Axes.text() method. This method expects at 
+least three arguments:
+x and y: the coordinates that give the position of the text.
+s: the text.
+fig, ax = plt.subplots()
+ax.bar(['A', 'B', 'C'],
+       [2, 4, 16])
+ax.text(x=0.5, y=18, s='Title example')
+ax.text(x=0.5, y=17, s='Subtitle example')
+plt.show()
+
+- The Axes.text() method has a size parameter we can use to control the text size. Also, it has a weight
+ parameter that enables us to bold the text.
+fig, ax = plt.subplots()
+ax.bar(['A', 'B', 'C'],
+       [2, 4, 16])
+ax.text(x=0.5, y=18, s='Title example',
+        size=15, weight='bold')
+ax.text(x=0.5, y=17, s='Subtitle example',
+        size=12)
+plt.show()
+
+
+************************
+Topic: 'Final Touches'
+************************
+
+We will add a comma to both 150000 and 300000 to make them more readable — so people dont have to 
+struggle to tell whether it's a 30,000 or a 300,000,
+ax.set_xticklabels(['0', '150,000', '300,000'])
+we are going to left-align the y-tick labels (the country names) by applying a for loop over the country
+names using python's zip function.
+First, however, we're going to remove the current labels using the Axes.set_yticklabels() method.
+
+# Assume the rest of the code is written
+ax.set_yticklabels([]) # an empty list removes the labels
+country_names = top20_deathtoll['Country_Other']
+for i, country in zip(range(20), country_names):
+    ax.text(x=-80000, y=i-0.15, s=country)
+
+- we're going to draw a vertical line below the 150,000 value. To do that, we use the Axes.axvline(x) 
+method, where x is the x-coordinate where the line begins:   
+ax.axvline(x=150000)
+
+- The color of the vertical line is too bright and stands out more than we want. The line goes too
+ down below the Turkey(last country on plot). To fix this,
+1. The ymin parameter to make it shorter — where 0 is the bottom of the plot, and 1 is the top of 
+the plot.
+2. The c parameter to change the color to 'grey'.
+3. The alpha parameter to add transparency to the line.
+
+ax.axvline(x=150000, ymin=0.045, c='grey', alpha=0.5)
+
+
+
+
+

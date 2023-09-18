@@ -1,0 +1,146 @@
+ 'Seaborn' : Its a Python data visualization library that builds on 'Matplotlib'.
+ Seaborn enables us to easily show more than two variables on a graph.
+- Visually, the graph uses Matplotlib defaults. To switch to Seaborn defaults, we need to call 
+the sns.set_theme() function:
+- We need to call the sns.set_theme() function before generating the plot — before calling sns.relplot().
+- we only need to call this function once.
+
+
+Tasks:
+
+a. Import seaborn and matplotlib using the standard aliases.
+b. Set the visual properties to Seaborn defaults.
+c. Using sns.relplot(), plot a scatter plot with Gr Liv Area on the x-axis and SalePrice on the y-axis.
+d. Call plt.show() to display the plot. Run your code without submitting the answer.
+e. Inspect the scatter plot and determine the correlation type. Assign your answer as a string to a 
+variable named correlation — the possible answers are 'negative', 'null', and 'positive'.
+
+
+Action:
+
+
+import pandas as pd
+housing = pd.read_csv('housing.csv')
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set_theme()
+sns.relplot(data=housing, x='Gr Liv Area', y='SalePrice')
+plt.show()
+
+correlation = 'positive'
+
+
+********************************************
+Situation: 'Variable Representation: Color'
+********************************************
+
+Question: What are variables?
+Above we generated a plot with 2 variables (columns) 
+'Gr Liv Area' and 'SalePrice'. 
+
+- We can change the color intensity of the dots to represent a new variable.
+- we use the hue parameter to add the Overall Qual variable on the scatter plot. 
+- The hue parameter is set to 'Overall Qual' (overall quality) which is used to color code the data 
+points on the plot, with higher quality houses being represented by a different color on the plot.
+- The values in the Overall Qual variable range from one to ten — one is equivalent to "very poor," 
+and ten is equivalent to "very excellent"
+- Seaborn matched lower ratings with lighter colors and higher ratings with darker colors.
+- Seaborn matched lower ratings with lighter colors and higher ratings with darker colors
+- Lets say we want the colors to vary between red and green — where dark red means a rating of one 
+and dark green means a rating of ten. We can make this change using the palette parameter with the 
+'RdYlGn' argument:
+
+sns.relplot(data=housing, x='Gr Liv Area', y='SalePrice',
+            hue='Overall Qual', palette='RdYlGn')
+plt.show()
+
+
+********************************************
+Situation : 'Variable Representation: Size'
+*********************************************
+- Another element we can use to represent values is size.
+- If we don't want to control the size, then Seaborn does the size mapping automatically anyway. 
+- A dot can have a color and x- and y-coordinates, but it can also be larger or smaller.
+
+eg:
+sns.relplot(data=housing, x='Gr Liv Area', y='SalePrice',
+            hue='Overall Qual', palette='RdYlGn',
+            size='Garage Area', sizes=(1,300))
+plt.show()
+
+sizes= the sizes parameter takes in a tuple specifying the minimum and maximum size. 1 means smallest
+and 300 means largest
+
+- The sizes parameter can take in a tuple only if the variable we represent is numerical — Garage Area 
+is a numerical variable.
+- If the sizes for a non-numerical (categorical) variable, we need to use a list or a dict.
+eg: The Rooms variable is categorical, and it has two unique values: '7 rooms or more', and '6 rooms or 
+less'. Below, we pass in the list [200,50] to map '7 rooms or more' to a size of 200 and '6 rooms or 
+less' to a size of 50.
+sizes=[200,50] 
+
+
+********************************************
+Situation : 'Variable Representation: Shape'
+********************************************
+
+
+- On the graph we've built, each dot has the shape of a circle. Instead of a circle, however, it 
+  could have been a triangle, a square, etc.
+- We call the dots on our graphs 'markers'. 
+- To make this change, we use the 'style' parameter.
+eg:
+
+sns.relplot(data=housing, x='Gr Liv Area', y='SalePrice',
+            hue='Overall Qual', palette='RdYlGn',
+            size='Garage Area', sizes=(1,300),
+            style='Rooms', markers=['*','v'])
+plt.show()
+
+
+*********************************************************
+Situation: 'Variable Representation: Spatial Separation'
+*********************************************************
+So far we added:
+1. Gr Liv Area: represented with x-coordinates.
+2. SalePrice: represented with y-coordinates.
+3. Overal Qual: represented with color.
+4. Garage Area: represented with size.
+5. Rooms: represented with shape.
+
+Will add one more variable 'Year' variable. 
+This variable describes the year when a house was built, and it has only two values: 1999 or older 
+and 2000 or newer. We use 'col' parameter.
+eg:
+
+sns.relplot(data=housing, x='Gr Liv Area', y='SalePrice',
+            hue='Overall Qual', palette='RdYlGn',
+            size='Garage Area', sizes=(1,300),
+            style='Rooms', col='Year')
+plt.show()
+
+Question: Why we call it as a relational plot?
+Answer: Because it shows the relationships between so many variables. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
