@@ -1,0 +1,82 @@
+PRAGMA table_info(orders);
+- This is use to display data types in orders table
+- Unlike a SELECT statement, which retrieves data from a table, PRAGMA table_info() retrieves metadata, 
+which is information about a table.
+- When we run this command, it returns one row for each of the table's columns with information, 
+such as its name and data type.
+
+* SQLite uses the following terminology:
+'Integer' for integer numbers, like the values in the quantity field.
+'Real' for floating point values (or floats). Think of these as decimal numbers, like the values 
+in the sales field.
+'Text or strings' for regular text values, like the values in the order_date, order_id, and 
+product_name fields.
+
+Task:
+- Write a query that includes order_id, sales, profit, and profit margin (profit divided by sales).
+- Alias the calculated field as profit_margin.
+- Only display 8 rows.
+
+Solution:
+SELECT order_id, sales, profit, profit/sales AS profit_margin
+FROM orders
+LIMIT 8;
+
+**********************************
+ Situation :  Integer Division
+**********************************
+To change the datatype of a column/value we can use the CAST function, 
+like so: CAST(column/value AS new_datatype).
+
+
+Task:
+You have been asked to write a query that helps identify whether customers are more likely to purchase 
+an even number of an item or an odd number to help with ordering inventory. You can do this by dividing 
+the quantity by 2 to help separate results that are whole numbers vs. decimal numbers.
+Write a query that includes:
+product_id
+quantity
+a calculated field that divides quantity by 2 (remember to CAST your integer to a real number)
+Alias the calculated field as even_or_odd
+Limit your results to 5 rows
+
+
+Action:
+
+SELECT product_id, quantity, CAST(quantity as REAL)/2 AS even_or_odd
+FROM orders
+LIMIT 5
+
+
+*******************************************
+Situatioin: Functions on Fields: ROUND()
+*******************************************
+
+ROUND(), which rounds numerical values to a specified number of decimal places. This function requires
+us to enter two arguments,
+ROUND(value, decimal_places)
+1. value: the number we want to round
+2. decimal_places: the number of decimal places to round the value to (Note: if this argument is omitted,
+ the function will round to the nearest whole number.)
+
+
+Task:
+Many customers buy multiples of the same item, which makes it difficult to see how much each item costs.
+a. Write a query from the orders table that includes order_id, sales, and quantity.
+b. Create a field price_per_unit that divides sales by quantity.
+c. Round price_per_unit to the nearest cent.
+d. Only display 10 rows.
+
+
+Action:
+SELECT order_id , sales, quantity,
+    ROUND (sales/quantity,2) As price_per_unit
+    FROM orders
+    Limit 10;
+
+
+
+*******************************************************
+Situation: Functions on Fields: UPPER() and LOWER()
+*******************************************************
+

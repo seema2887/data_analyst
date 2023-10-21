@@ -1,0 +1,28 @@
+Gestalt principles tell us what sort of pattern we can expect people to see when we show them our 
+data visualizations.
+
+When we see distinct objects close to each other, we perceive them as a group. 
+We call this the 'principle of proximity' — this is a Gestalt principle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,157 @@
+*************************
+Topic: 'Faster Workflow'
+*************************
+
+we draw the same plot on each of the four Axes objects, we can simplify our work using a for loop. 
+First, we group the four Axes objects into a Python list, and then we iterate over that list:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+death_toll = pd.read_csv('covid_avg_deaths.csv')
+
+fig, (ax1, ax2, ax3, ax4) = plt.subplots(nrows=4, ncols=1, figsize= (6,8))
+axes = [ax1, ax2, ax3, ax4]
+for ax in axes:
+ax.plot(death_toll['Month'], death_toll['New_deaths'])
+plt.show()
+
+
+Tasks:
+a. Generate a line plot with the Month column on the x-axis and the New_deaths columns on the y-axis.
+b. Remove the x- and y-tick labels.
+c. Remove all ticks using the Axes.tick_params() method.
+d. Remove all the spines using the Axes.spines[location].set_visible() method.
+
+
+Actions:
+
+mport pandas as pd
+import matplotlib.pyplot as plt
+
+death_toll = pd.read_csv('covid_avg_deaths.csv')
+fig, (ax1, ax2, ax3, ax4) = plt.subplots(nrows=4, ncols=1,
+                                         figsize=(6,8))
+axes = [ax1, ax2, ax3, ax4]
+for ax in axes:
+    ax.plot(death_toll['Month'], death_toll['New_deaths'])
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+    ax.tick_params(bottom=False, left=False)
+    for location in ['left', 'right', 'top', 'bottom']:
+        ax.spines[location].set_visible(False)
+
+plt.show()
+    
+
+***************************************
+Situation: 'Modifying the Line Plots' 
+***************************************
+
+The storytelling data visualization, showed four periods:
+1. January - March
+2. March - June
+3. June - October
+4. October - December
+
+To draw separate line plots on top of the current ones. We begin by drawing the first one — 
+we use the same color and increase the line width using the linewidth parameter.
+ # we used ax1 in ax1.plot(), not just ax.
+
+ax1.plot(death_toll['Month'][:3], death_toll['New_deaths'][:3],
+         color='#af0b1e', linewidth=2.5)
+ax2.plot(death_toll['Month'][2:6], death_toll['New_deaths'][2:6],
+         color='#af0b1e', linewidth=2.5)
+ax3.plot(death_toll['Month'][5:10], death_toll['New_deaths'][5:10],
+         color='#af0b1e', linewidth=2.5)
+ax4.plot(death_toll['Month'][9:12], death_toll['New_deaths'][9:12],
+         color='#af0b1e', linewidth=2.5)
+plt.show()
+
+
+*************************************************************************
+Situation: 'Adding Structural Elements'(Adding labels to the line plot)
+*************************************************************************
+
+We need to add a few structural elements so the audience can understand the visualization.
+1. We're going to show the quantities by adding three labels on the first plot — we do this using 
+the Axis.text() method.
+ax1.text(0.5, -80, '0', alpha=0.5)
+ax1.text(3.5, 2000, '1,844', alpha=0.5)
+ax1.text(11.5, 2400, '2,247', alpha=0.5)
+
+2. We add the 'Jan-Mar' label using Axes.text(). the 'rotation' parameter we use to slightly rotate 
+the text. 
+ax1.text(1.1, -300, 'Jan - Mar', color='#af0b1e',
+         weight='bold', rotation=3)
+
+3. And for other labels too
+ax2.text(3.7, 800, 'Mar - Jun', color='#af0b1e', weight='bold')
+ax3.text(7.1, 500, 'Jun - Oct', color='#af0b1e', weight='bold')
+ax4.text(10.5, 600, 'Oct - Dec', color='#af0b1e', weight='bold',
+        rotation=45)
+plt.show()
+
+
+*****************************************
+Situation: 'To add Title and Subtitle'
+*****************************************
+ax1.text() = will give you your title and subtitle at top of your plot, so dont write ax.text()
+
+ax1.text(x=0.5, y=3500, s='The virus kills 851 people each day', size=14, weight='bold')
+ax1.text(x=0.5, y=3150, s='Average number of daily deaths per month in the US', size=12)
+
+plt.show()
+
+
+**************************************
+Situation: 'Adding a Progress Bar'
+**************************************
+
+- The progress bars follow the change in the total number of cumulative deaths over the 
+four highlighted periods.
+- A progress bar is made of two rectangles. The rectangles are different colors, and the one with 
+a darker shade is put on top of the other — this creates a visual sense of progress.
+- To create a rectangle in Matplotlib, we can draw a thick horizontal line. To draw a horizontal line,
+we can use the Axes.axhline() method. 
+ ax1.axhline(y=1600) // this will make a horizontal line.
+- The y parameter specifies the y-coordinate of the horizontal line.
+- Next, Make the line shorter — we control the line's length using xmin and xmax parameters.
+- Increase the line's width to make it look like a rectangle — we use the linewidth parameter.
+- Change the color to '#af0b1e' and increase its transparency — we use the color and alpha parameters.
+
+ax1.axhline(y=1600, xmin=0.5, xmax=0.8,linewidth=6, color='#af0b1e', alpha=0.1)
+
+do it for rest
+ax2.axhline(y=1600, xmin=0.5, xmax=0.8,linewidth=6, color='#af0b1e', alpha=0.1)
+ax3.axhline(y=1600, xmin=0.5, xmax=0.8,linewidth=6, color='#af0b1e', alpha=0.1)
+ax4.axhline(y=1600, xmin=0.5, xmax=0.8,linewidth=6, color='#af0b1e', alpha=0.1)
+OR use a for loop
+
+for ax in axes:
+    ax.axhline(y=1600, xmin=0.5, xmax=0.8,linewidth=6, color='#af0b1e', alpha=0.1)
+
+'Completing the progress bar' :
+To draw one more rectangle on a rectangle, 
+
+for ax in axes:
+    # First line
+    ax.axhline(y=1600, xmin=0.5, xmax=0.8,
+               linewidth=6, color='#af0b1e', alpha=0.1)
+
+    # Second line
+    ax.axhline(y=1600, xmin=0.5, xmax=0.65,
+               linewidth=6, color='#af0b1e')
+
+ax.text(7.5, 1850, format(death,','), color='#af0b1e', weight='bold')
+
+plt.show()
+
+
+
+
+
+
+
+
+
+

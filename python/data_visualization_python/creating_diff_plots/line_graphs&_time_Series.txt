@@ -1,0 +1,209 @@
+Q. What is data Visualization?
+A. Transforming data into visual form.
+We have 2 kinds of data visualizations:
+1. Exploratory data visualization: We build graphs for ourselves to explore data and find patterns.
+2. Explanatory data visualization: We build graphs for others to communicate and explain the patterns 
+we've found through exploring data.
+
+'Graphs':
+
+
+(y axis)
+6|
+5|
+4|
+3|seven unit lenths
+2|_________________. A(7,2)two unit lengths               
+1|_________________|___________
+0  1  2  3  4 5 6  7 (x-axis)
+
+- The two numbers that represent the distances of a point from the x- and y-axis are called coordinates. 
+- Point A above has two coordinates: seven and two. 
+- Seven is the x-coordinate, and two is the y-coordinate.
+- The coordinates often appear in the form (x, y), with the x-coordinate first. So the coordinates of
+ A are (7, 2).
+ what we need to know about coordinates:
+- The x-coordinate shows the distance in unit lengths relative to the y-axis.
+- The y-coordinate shows the distance in unit lengths relative to the x-axis.
+- The unit lengths of the x- and y-axes doesn't have to be the same. 
+eg: The unit of length on the x-axis is 10, while on the y-axis it is 1,000 (note that we can also hide 
+some of the numbers to make the graph look better).
+
+ 
+
+(y axis)
+10000
+9000|          .C(50, 9000)
+8000|
+7000|
+6000|
+5000|       .B(40, 5000)
+4000|    
+3000|
+2000|_________________. A(70,2000)               
+1000|_________________|___________
+0  10 20 30 40 50 60  70 (x-axis)
+
+1. Question:
+a. What is the unit length of the x-axis? Assign your answer to x_unit_length.
+x_unit_length = 10
+b. What is the unit length of the y-axis? Assign your answer to y_unit_length.
+y_unit_length = 1000
+c. What is x-coordinate of point A? Assign your answer to x_coordinate_A.
+x_coordinate_A = 70
+d. What is the y-coordinate of point B? Assign your answer to y_coordinate_B.
+y_coordinate_B = 5000
+e. What are the x- and y-coordinates of point C? Assign your answer as a Python list to 
+C_coordinates — the x-coordinate must come first in your list.
+C_coordinates = [50, 9000]
+
+'Line Graphs':
+Because we use lines to connect the points, the graph above is a line graph (also known as a line plot, 
+or line chart; the distinction between graph, plot and chart is ambiguous in the data visualization 
+world, with different authors assigning slightly different meanings to these terms
+
+'Matplotlib' :
+We can build this line graph ourselves using Matplotlib, a Python library specifically designed for 
+creating visualizations.
+- We generally import the pyplot submodule instead of the whole module:
+import matplotlib.pyplot instead of import matplotlib.
+- When we import matplotlib.pyplot, we need to use the plt alias, by convention 
+(import matplotlib.pyplot as plt).
+- The pyplot submodule is a collection of high-level functions we can use to generate graphs very quickly. 
+To create our line graph above, we need to:
+* Add the data to the plt.plot() function.
+* Display the plot using the plt.show() function.
+
+import matplotlib.pyplot as plt
+month_number = [1, 2, 3, 4, 5, 6, 7]
+new_cases = [9926, 76246, 681488, 2336640,
+             2835147, 4226655, 6942042]
+
+plt.plot(month_number, new_cases)
+plt.show()
+
+The plt.plot() function generates a line graph by default. All it needs is two arrays of data of the 
+same length — these can be Python lists, pandas Series, NumPy arrays, etc. Above, we used two Python lists.
+
+- The two arrays must be equal in length, or some coordinates will remain unpaired, and Matplotlib will 
+raise an error.
+
+'Customizing a Graph':
+Matplotlib changes to scientific notation if one value on the axis needs to be one million or greater. 
+If we want to remove scientific notation, we can use the plt.ticklabel_format(axis, style) function.
+
+plt.plot(month_number, new_cases)
+plt.ticklabel_format(axis='y', style='plain')
+plt.show()
+
+- The axis parameter defines which axis to configure — its arguments are the strings 'x', 'y', and 'both'.
+- The style parameter controls the notation style (plain or scientific). Its arguments are 'sci', 
+'scientific', and 'plain'.
+- We use the plt.title() function to add a title to our line graph.
+eg:
+plt.plot(month_number, new_cases)
+plt.ticklabel_format(axis='y', style='plain')
+plt.title('New Reported Cases by Month — Globally')
+plt.show()
+- The x-axis shows the month number, and the y-axis shows the number of new reported cases. 
+We can show this on our graph by adding a label to each axis — a y-label and an x-label. 
+To add axis labels, we use plt.xlabel() and plt.ylabel().
+eg:
+plt.plot(month_number, new_cases)
+plt.ticklabel_format(axis='y', style='plain')
+plt.title('New Reported Cases By Month (Globally)')
+plt.xlabel('Month Number')
+plt.ylabel('Number Of Cases')
+plt.show()
+
+'WHO Time Series Data'
+We stored our data in a few Python lists and used them to generate line graphs. 
+Next, were going to use a larger dataset that we've collected from the World Health Organization.
+
+* Let's read in the dataset using the pandas library:
+import pandas as pd
+who_time_series = pd.read_csv('WHO_time_series.csv')
+print(who_time_series.head())
+The head() method returns a specified number of rows, string from the top. The head() method returns 
+the first 5 rows if a number is not specified.
+- The rows in our dataset are listed in time order, starting with January 4 and ending with July 31. 
+We call a series of data points that is listed in time order a time series.
+- Typically we visualize time series with line graphs. The time values are always plotted, by convention,
+ on the x-axis.
+
+1. Question:
+a. Import the pandas module as pd.
+b. Read in the WHO_time_series.csv file using the pd.read_csv() function. Assign the resulting DataFrame
+ to a variable named who_time_series.
+c. Modify the Date_reported column in who_time_series to a datetime data type using pd.to_datetime().
+d. Print the first and the last five rows and examine the data points. Be sure to specify print().
+e. Print information about the dataset using the DataFrame.info() method. How many rows and columns does 
+the dataset have? Do you see any missing values?
+
+Answer:
+import pandas as pd
+who_time_series = pd.read_csv('WHO_time_series.csv')
+who_time_series['Date_reported'] = pd.to_datetime(who_time_series['Date_reported'])
+print(who_time_series.head(5))
+print(who_time_series.tail(5))
+print(who_time_series.info())
+
+'Types of Growth':
+
+1. A quantity that increases slowly in the beginning — but then starts growing faster and faster over 
+time has 'exponential growth'.
+2. A quantity that increases constantly over time has 'linear growth'.
+3. The quantity starts off with a slow rate of increase is 'logarithmic growth'.
+-Change is not only about growth. A quantity can also 'decrease' following a linear, exponential, 
+or logarithmic pattern.
+
+india = who_time_series[who_time_series['country'] == 'India']
+plt.plot(india['Date_reported'], india['New_cases'])
+plt.title(India : New Report Cases)
+plt.xlabel('Date')
+plt.ylabel('Number Of Cases')
+plt.show()
+
+'Comparing Line Graphs':
+If you have multiple line graphs and you dont know which color line graph is of which country, to clear
+the confusion we use 'plt.legend()' after plt.plot() and then plt.show().
+- When we use plt.plot() the first time, Matplotlib creates a line graph. When we use plt.plot() again, 
+Matplotlib creates another line graph that shares the same x- and y-axis as the first graph.
+- If we want Matplotlib to draw the second line graph separately, we need to close the first graph with 
+the plt.show() function.
+eg:
+plt.plot(france['Date_reported'], france['Cumulative_cases'])
+plt.title('France')
+plt.show()
+
+plt.plot(uk['Date_reported'], uk['Cumulative_cases'])
+plt.title('The UK')
+plt.show()
+
+2. Question:
+a. Plot the evolution of cumulative cases for France, the United Kingdom, and Italy on the same graph.
+b. Add a legend to the graph using plt.legend(). Use the labels France, The UK, and Italy.
+c. Run your code without submitting the answer.
+d. Which country has the greatest number of cases at the end of July? Assign your answer as a string to 
+the variable greatest_july — choose between the strings 'France', 'The UK', and 'Italy'.
+e. Which country has the lowest number of cases at the end of July? Assign your answer as a string 
+to the variable lowest_july.
+f. Which country shows the greatest increase during March? Assign your answer as a string to the 
+variable increase_march.
+
+Answer:
+france = who_time_series[who_time_series['country']] == 'France'
+uk = who_time_series[who_time_series['country']] == 'The UK'
+italy = who_time_series[who_time_series['country'] == 'Italy']
+
+plt.plot(france['Date_reported'], france['Cumulative_cases'], label = 'France')
+plt.plot(uk['Date_reported'], uk['Cumulative_cases'], label = 'The UK')
+plt.plot(italy['Date_reported'], italy['Cumulative_cases'], label = 'Italy')
+plt.legend()
+plt.show()
+
+greatest_july = 'The UK'
+lowest_july = 'France'
+increase_march = 'Italy'
+
+* with 'label' you will get an idea what line graph color is for what country.
