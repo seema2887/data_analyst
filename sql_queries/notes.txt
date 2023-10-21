@@ -23,7 +23,7 @@ FROM orders
 LIMIT 8;
 
 **********************************
- Situation :  Integer Division
+ Situation : 'Integer Division'
 **********************************
 To change the datatype of a column/value we can use the CAST function, 
 like so: CAST(column/value AS new_datatype).
@@ -49,7 +49,7 @@ LIMIT 5
 
 
 *******************************************
-Situatioin: Functions on Fields: ROUND()
+Situatioin: 'Functions on Fields: ROUND()'
 *******************************************
 
 ROUND(), which rounds numerical values to a specified number of decimal places. This function requires
@@ -77,6 +77,143 @@ SELECT order_id , sales, quantity,
 
 
 *******************************************************
-Situation: Functions on Fields: UPPER() and LOWER()
+Situation: 'Functions on Fields: UPPER() and LOWER()'
 *********************************************************
+These functions have many uses, but two of the most common uses are:
+
+1. Data normalization: When importing data from various sources, we may encounter inconsistent letter 
+casing. We can use UPPER() or LOWER() to normalize the text data, making it uniform and easier to 
+analyze.
+2. Display formatting: We can use UPPER() or LOWER() to format the output of our query for improved 
+readability or to meet specific display requirements.
+
+For example,we wanted to convert the ship_mode column to all uppercase for formatting purposes.
+This is possible with the UPPER() function:
+
+SELECT ship_mode AS original_ship_mode,
+       UPPER(ship_mode) AS SHIP_MODE
+  FROM orders;
+
+
+Task:
+
+Customers enter their own names when they purchase items from the superstore online, which means some 
+customer names have inconsistent capitalization formatting.
+a. Write a query that converts customer_name from the orders table to all lowercase letters.
+b. Alias the newly formatted names as customer_name_lower.
+
+
+Action:
+
+SELECT customer_name AS customer_name_lower,
+LOWER(customer_name) AS CUSTOMER_NAME
+FROM orders;
+
+
+**********************************
+Situation: 'Concatenating Fields'
+**********************************
+It's also possible to concatenate, or combine, multiple pieces of text together.
+ To put the city and state columns together like this: Henderson, Kentucky.
+SQLite uses the concatenate operator (||) to join two strings into one.
+
+SELECT city || ", " || state AS "location"
+  FROM orders;
+
+Output:
+
+location
+Henderson, Kentucky
+Henderson, Kentucky
+Los Angeles, California
+Fort Lauderdale, Florida
+Fort Lauderdale, Florida
+
+
+Task:
+Every superstore location is named after the city where it's located. For example, the store in Los Angeles, California is called "Superstore Los Angeles."
+
+a. Write a query that includes order_id, region, and state.
+b. Create a new column called local_store that concatenates the word "Superstore" with city.
+c. Limit your results to 10 rows.
+d. Don't forget to leave a space after the word "Superstore."
+
+
+Action:
+SELECT order_id, region, state,
+"Superstore " || city AS local_store       // give 1 space inside the "" to separate 2 words.
+FROM orders
+LIMIT 10;
+
+
+
+******************************
+Situation: 'Constant value'
+******************************
+
+Sometimes we'll want to add a column to our query that shows a constant number for every record.
+We can do this by specifying the number in the SELECT clause and adding an alias for readability 
+(note that the alias isn't required):
+
+SELECT sales, 2 AS promotional_discount
+  FROM orders;
+
+ Output
+_________________________________________
+sales	        promotional_discount      
+261.96	            2
+731.94	            2
+14.62	              2
+957.5775	          2
+22.368	            2 
+__________________________________________
+
+
+Task:
+
+You've been asked to create a table that shows the salary for all the regional managers.
+a. Write a query from managers that includes all fields.
+b. Create a new column with the manager salary amount: $51,000. Alias it as salary.
+
+
+Action:
+SELECT * , 51000 AS salary       // don't put $ sign and commma in salary
+FROM managers;
+
+
+
+*********************************
+Topic: 'Combining all together'
+*********************************
+
+a. Create a field called address that combines city, state, and postal_code in the following format:
+   city, state 99999
+b. Create a field called tax that finds 7% of sales, rounded to the nearest cent.
+c. Create a field called shipping_cost with a value of 4.99.
+d. Create a field called total_cost that adds the values from sales, shipping_cost, and tax together,
+ rounded to the nearest cent.
+e. For readability, your final query should include the following fields:
+address
+sales
+tax
+shipping_cost
+total_cost
+f. Limit your results to 10 rows.
+
+
+Action:
+
+SELECT city ||", "|| state ||" "|| postal_code AS address,
+sales, 
+ROUND(sales * 0.07, 2) AS tax,
+4.99 AS shipping_cost,
+ROUND(sales + 4.99 + sales*0.07 , 2) AS total_cost
+FROM orders
+LIMIT 10;
+
+
+
+
+
+
 
